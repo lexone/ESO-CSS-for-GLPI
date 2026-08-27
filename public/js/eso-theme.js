@@ -362,6 +362,7 @@
         const enabled = !!login.enabled;
         body.classList.toggle('eso-login-custom', enabled);
         body.classList.toggle('eso-login-has-logo', enabled && !!login.logo_url);
+        body.classList.toggle('eso-login-hide-default-logo', enabled && !!login.hide_default_logo);
         body.classList.remove(
             'eso-login-image-panel',
             'eso-login-image-background',
@@ -381,9 +382,7 @@
         const configuredImageMode = ['panel', 'background'].includes(login.image_mode) ? login.image_mode : 'panel';
         const configuredLayout = ['center', 'left', 'right'].includes(login.layout) ? login.layout : 'center';
         const imageMode = style === 'classic' ? configuredImageMode : 'background';
-        const layout = style === 'glass'
-            ? 'center'
-            : (style === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout);
+        const layout = style === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout;
         body.classList.add(
             `eso-login-image-${imageMode}`,
             `eso-login-align-${layout}`,

@@ -120,7 +120,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             <h1 class="h2 mb-1"><i class="ti ti-palette me-2"></i>ESO CSS for GLPI</h1>
             <p class="text-muted mb-0">Personalize cores, cards e gráficos ECharts do GLPI 11 sem editar o core.</p>
         </div>
-        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.1') ?></span>
+        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.2') ?></span>
     </div>
 
     <form method="post" action="<?= htmlspecialchars($settingsFormUrl, ENT_QUOTES, 'UTF-8') ?>" autocomplete="off" enctype="multipart/form-data">
@@ -454,7 +454,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                                 <label class="form-label fw-semibold" for="login_style">Estilo da tela de login</label>
                                 <select class="form-select" id="login_style" name="login_style">
                                     <option value="classic" <?= $config['login_style'] === 'classic' ? 'selected' : '' ?>>Personalizado atual (compatibilidade)</option>
-                                    <option value="glass" <?= $config['login_style'] === 'glass' ? 'selected' : '' ?>>Vidro central</option>
+                                    <option value="glass" <?= $config['login_style'] === 'glass' ? 'selected' : '' ?>>Vidro</option>
                                     <option value="portal" <?= $config['login_style'] === 'portal' ? 'selected' : '' ?>>Portal lateral</option>
                                 </select>
                                 <div class="form-hint">
@@ -570,6 +570,12 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                                         <span class="form-check-label">Remover logotipo atual</span>
                                     </label>
                                 <?php endif; ?>
+                                <label class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="login_hide_default_logo"
+                                           name="login_hide_default_logo" value="1" <?= $config['login_hide_default_logo'] === '1' ? 'checked' : '' ?>>
+                                    <span class="form-check-label">Ocultar a logo padrão “GLPI”</span>
+                                </label>
+                                <div class="form-hint">Se houver uma logo personalizada, ela continuará visível.</div>
                             </div>
                         </div>
 
@@ -911,9 +917,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         const layoutValue = $('#login_layout')?.value || 'center';
         const configuredLayout = ['center', 'left', 'right'].includes(layoutValue) ? layoutValue : 'center';
         const imageMode = loginStyle === 'classic' ? configuredImageMode : 'background';
-        const layout = loginStyle === 'glass'
-            ? 'center'
-            : (loginStyle === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout);
+        const layout = loginStyle === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout;
         const mediaWidth = Math.max(45, Math.min(75, Number($('#login_media_width')?.value || 65)));
         const imagePosition = $('#login_background_position')?.value || 'center';
         const overlayOpacity = Math.max(0, Math.min(90, Number($('#login_overlay_opacity')?.value || 12))) / 100;
@@ -1025,6 +1029,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
 
         const removeLogo = $('#remove_login_logo')?.checked;
         const logoUrl = removeLogo ? '' : (preview.dataset.selectedLogoUrl || preview.dataset.logoUrl || '');
+        const hideDefaultLogo = $('#login_hide_default_logo')?.checked;
         const logo = preview.querySelector('.eso-login-preview-logo');
         const fallback = preview.querySelector('.eso-login-preview-logo-fallback');
         if (logo) {
@@ -1032,7 +1037,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             logo.style.maxHeight = Math.min(120, Math.max(24, Number($('#login_logo_max_height')?.value || 78))) + 'px';
             logo.classList.toggle('d-none', logoUrl === '');
         }
-        fallback?.classList.toggle('d-none', logoUrl !== '');
+        fallback?.classList.toggle('d-none', logoUrl !== '' || hideDefaultLogo);
     }
 
     function syncBrandPreview() {
@@ -1159,7 +1164,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
     all('input[type="number"]').forEach(input => input.addEventListener('input', syncPreview));
     all('#home_title, #home_subtitle, #home_background_position, #remove_home_background, #remove_home_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
-    all('#login_title, #login_subtitle, #login_style, #login_image_mode, #login_layout, #login_background_position, #remove_login_background, #remove_login_logo')
+    all('#login_title, #login_subtitle, #login_style, #login_image_mode, #login_layout, #login_background_position, #remove_login_background, #remove_login_logo, #login_hide_default_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
     all('#remove_brand_sidebar_logo, #remove_brand_sidebar_compact_logo, #remove_brand_header_logo, #remove_brand_favicon')
         .forEach(input => input.addEventListener('input', syncPreview));

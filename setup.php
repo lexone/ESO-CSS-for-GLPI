@@ -15,7 +15,7 @@ use GlpiPlugin\EsoCss\Settings;
 require_once __DIR__ . '/src/Settings.php';
 require_once __DIR__ . '/src/Updater.php';
 
-define('PLUGIN_ESOCSS_VERSION', '1.9.1');
+define('PLUGIN_ESOCSS_VERSION', '1.9.2');
 define('PLUGIN_ESOCSS_MIN_GLPI', '11.0.0');
 define('PLUGIN_ESOCSS_MAX_GLPI', '11.0.99');
 

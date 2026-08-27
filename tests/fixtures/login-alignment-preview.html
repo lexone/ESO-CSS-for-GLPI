@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESO CSS - teste de alinhamento do login</title>
+    <link rel="stylesheet" href="../../public/css/eso-modern.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font: 15px/1.45 Arial, sans-serif; }
+        .flex-fill { min-height: 100vh; }
+        .container-tight { max-width: 60rem; margin-inline: auto; }
+        .text-center { text-align: center; }
+        .glpi-logo { display: inline-flex; width: 200px; height: 110px; align-items: center; justify-content: center; font-size: 42px; font-style: italic; font-weight: 800; }
+        .card-body { padding: 24px; }
+        .row { display: flex; justify-content: center; }
+        .col-md-5 { width: 42%; }
+        .singlesignon-login { padding: 16px; border: 1px solid #dde3ec; border-radius: 14px; }
+        .singlesignon-login-button, .singlesignon-login-remember-inner { display: flex; min-height: 54px; padding: 14px; align-items: center; border: 1px solid #dde3ec; border-radius: 10px; }
+        .singlesignon-login-remember-inner { margin-top: 14px; }
+        .singlesignon-login-classic { margin-top: 18px; }
+    </style>
+</head>
+<body class="welcome-anonymous">
+    <main id="page" class="page-anonymous">
+        <div class="flex-fill">
+            <div class="container-tight">
+                <div class="text-center"><span class="glpi-logo" title="GLPI">GLPI</span></div>
+                <div class="card card-md main-content-card">
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="singlesignon-login">
+                                        <div class="singlesignon-login-button"><span class="singlesignon-login-label">Entrar com SSO</span></div>
+                                        <div class="singlesignon-login-remember"><div class="singlesignon-login-remember-inner"><span class="singlesignon-login-remember-title">Lembrar de mim</span></div></div>
+                                        <div class="singlesignon-login-classic text-center"><a href="#">Usar formulário de login</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="application/json" id="esocss-login-config">{"enabled":true,"hide_default_logo":true,"title":"Área de acesso","subtitle":"","texts":{},"background_url":"","logo_url":"","favicon_url":"","style":"glass","image_mode":"background","layout":"right","background_position":"center","background_color":"#3157D5","card_color":"#FFFFFF","text_color":"#1F2937","muted_color":"#667085","primary_color":"#3157D5","border_color":"#DDE3EC","overlay_color":"#10213F","overlay_opacity":15,"card_opacity":94,"card_width":920,"panel_width":720,"media_width":65,"card_radius":16,"logo_max_height":78}</script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const marker = document.getElementById('esocss-login-config');
+        const config = JSON.parse(marker.textContent);
+        const params = new URLSearchParams(location.search);
+        config.layout = params.get('layout') || config.layout;
+        config.hide_default_logo = params.get('hide') !== '0';
+        if (params.get('logo') === '1') {
+            config.logo_url = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22220%22 height=%2270%22%3E%3Crect width=%22220%22 height=%2270%22 rx=%2212%22 fill=%22%233157D5%22/%3E%3C/svg%3E';
+        }
+        marker.textContent = JSON.stringify(config);
+    </script>
+    <script src="../../public/js/eso-theme.js"></script>
+</body>
+</html>

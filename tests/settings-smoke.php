@@ -28,14 +28,20 @@ function assertSameValue(mixed $expected, mixed $actual, string $message): void
 
 $defaults = Settings::defaults();
 $settingsPage = file_get_contents(__DIR__ . '/../front/settings.php');
+$loginScript = file_get_contents(__DIR__ . '/../public/js/eso-theme.js');
+$themeStyles = file_get_contents(__DIR__ . '/../public/css/eso-modern.css');
 assertSameValue(true, str_contains($settingsPage, 'name="login_style"'), 'A interface deve exibir o seletor de estilo do login.');
-assertSameValue(true, str_contains($settingsPage, 'Vidro central'), 'A interface deve oferecer o modelo Vidro central.');
+assertSameValue(true, str_contains($settingsPage, '>Vidro</option>'), 'A interface deve oferecer o modelo Vidro.');
 assertSameValue(true, str_contains($settingsPage, 'Portal lateral'), 'A interface deve oferecer o modelo Portal lateral.');
+assertSameValue(true, str_contains($settingsPage, 'name="login_hide_default_logo"'), 'A interface deve permitir ocultar a logo padrão do GLPI.');
+assertSameValue(true, str_contains($loginScript, "const layout = style === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout;"), 'O estilo Vidro deve respeitar o alinhamento configurado.');
+assertSameValue(true, str_contains($themeStyles, '.eso-login-hide-default-logo:not(.eso-login-has-logo)'), 'O CSS deve ocultar apenas a logo padrão quando solicitado.');
 assertSameValue('#FFFFFF', $defaults['menu_background'], 'O menu precisa de uma cor de fundo padrão.');
 assertSameValue('#374151', $defaults['menu_text_color'], 'O menu precisa de texto legível por padrão.');
 assertSameValue('#FFFFFF', $defaults['button_text_color'], 'Botões principais precisam de texto legível por padrão.');
 assertSameValue('720', $defaults['login_panel_width'], 'O painel interno do login precisa de uma largura segura.');
 assertSameValue('classic', $defaults['login_style'], 'O estilo atual deve ser preservado por padrão.');
+assertSameValue('0', $defaults['login_hide_default_logo'], 'A logo padrão deve continuar visível em instalações existentes.');
 assertSameValue('panel', $defaults['login_image_mode'], 'Novas instalações devem usar a imagem em painel separado.');
 assertSameValue('center', $defaults['login_layout'], 'O login deve começar centralizado.');
 assertSameValue('65', $defaults['login_media_width'], 'O painel de imagem precisa de uma largura equilibrada.');
@@ -77,6 +83,7 @@ $sanitized = Settings::sanitize([
     'home_subtitle'         => "  Atendimento\nInstitucional  ",
     'home_background_position' => 'diagonal',
     'login_enabled'          => '1',
+    'login_hide_default_logo' => '1',
     'login_overlay_opacity'  => '99',
     'login_card_opacity'     => '20',
     'login_card_width'       => '2000',
@@ -120,6 +127,7 @@ assertSameValue('Central de Ajuda', $sanitized['home_title'], 'O título não de
 assertSameValue('Atendimento Institucional', $sanitized['home_subtitle'], 'Espaços do subtítulo devem ser normalizados.');
 assertSameValue('center', $sanitized['home_background_position'], 'Posições inválidas devem usar o centro.');
 assertSameValue('1', $sanitized['login_enabled'], 'A personalização do login deveria permanecer ativada.');
+assertSameValue('1', $sanitized['login_hide_default_logo'], 'A preferência de ocultar a logo padrão deve ser preservada.');
 assertSameValue('90', $sanitized['login_overlay_opacity'], 'A sobreposição do login deve respeitar o limite máximo.');
 assertSameValue('70', $sanitized['login_card_opacity'], 'A opacidade do cartão deve respeitar o limite mínimo.');
 assertSameValue('1200', $sanitized['login_card_width'], 'A largura do login deve respeitar o limite máximo.');
@@ -153,6 +161,7 @@ assertSameValue('#FFFFFF', $payload['colors']['button_text'], 'A interface deve 
 
 $loginPayload = Settings::publicLoginPayload();
 assertSameValue(true, $loginPayload['enabled'], 'A configuração pública deve ativar a tela de login.');
+assertSameValue(true, $loginPayload['hide_default_logo'], 'O login público deve receber a preferência de ocultar a logo padrão.');
 assertSameValue('erro Logon Único', $loginPayload['title'], 'O login deve expor apenas o título sanitizado.');
 assertSameValue('Entrar com conta corporativa', $loginPayload['texts']['sso_button'], 'O login deve expor o texto SSO sanitizado.');
 assertSameValue('Central de Serviços', $loginPayload['texts']['footer'], 'O login deve expor o rodapé sanitizado.');

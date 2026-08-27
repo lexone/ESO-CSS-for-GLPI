@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9.2 - 2026-08-27
+
+- Adicionada a opção **Ocultar a logo padrão “GLPI”** na personalização da tela de login.
+- Uma logo personalizada continua visível mesmo quando a logo padrão está ocultada.
+- Corrigido o estilo **Vidro** para respeitar as posições central, esquerda e direita configuradas.
+- Corrigida a prévia administrativa para representar o alinhamento e a visibilidade da logo escolhidos.
+
 ## 1.9.1 - 2026-08-27
 
 - Corrigida a exibição de imagens personalizadas para usuários anônimos na tela de login.

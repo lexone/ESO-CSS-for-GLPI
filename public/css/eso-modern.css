@@ -269,6 +269,10 @@ body.welcome-anonymous.eso-login-custom.eso-login-has-logo .glpi-logo {
     background-size: contain !important;
 }
 
+body.welcome-anonymous.eso-login-custom.eso-login-hide-default-logo:not(.eso-login-has-logo) .container-tight > .text-center:first-child {
+    display: none !important;
+}
+
 body.welcome-anonymous.eso-login-custom .main-content-card .form-control,
 body.welcome-anonymous.eso-login-custom .main-content-card .form-select,
 body.welcome-anonymous.eso-login-custom .main-content-card .input-group-text {
@@ -1562,6 +1566,14 @@ body.eso-theme-enabled .alert {
 
 #esocss-config-page .eso-login-preview-style-glass .eso-login-preview-overlay {
     flex-direction: column;
+}
+
+#esocss-config-page .eso-login-preview-style-glass.eso-login-preview-align-left .eso-login-preview-overlay {
+    align-items: flex-start;
+}
+
+#esocss-config-page .eso-login-preview-style-glass.eso-login-preview-align-right .eso-login-preview-overlay {
+    align-items: flex-end;
 }
 
 #esocss-config-page .eso-login-preview-style-glass .eso-login-preview-hero {

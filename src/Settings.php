@@ -18,6 +18,7 @@ final class Settings
             'home_enabled'         => '0',
             'home_hide_scenes'     => '0',
             'login_enabled'        => '0',
+            'login_hide_default_logo' => '0',
             'login_style'          => 'classic',
             'login_image_mode'     => 'panel',
             'login_layout'         => 'center',
@@ -145,7 +146,7 @@ final class Settings
         foreach (
             [
                 'theme_enabled', 'chart_enabled', 'card_hover', 'header_dark',
-                'home_enabled', 'home_hide_scenes', 'login_enabled',
+                'home_enabled', 'home_hide_scenes', 'login_enabled', 'login_hide_default_logo',
             ]
             as $key
         ) {
@@ -378,6 +379,7 @@ final class Settings
 
         return [
             'enabled'             => $c['login_enabled'] === '1',
+            'hide_default_logo'   => $c['login_hide_default_logo'] === '1',
             'title'               => $c['login_title'],
             'subtitle'            => $c['login_subtitle'],
             'texts'               => [
