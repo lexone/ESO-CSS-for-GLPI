@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9.1 - 2026-08-27
+
+- Corrigida a exibição de imagens personalizadas para usuários anônimos na tela de login.
+- Substituída a rota protegida `front/pluginimage.send.php` por um endpoint público, somente leitura e restrito aos nomes de imagens gerenciados pelo plugin.
+- O novo endereço `/plugins/esocss/media/` não expõe a extensão PHP na URL, reduzindo conflitos com regras WAF.
+- Adicionadas validações de caminho, formato real, tamanho, cache, `nosniff` e isolamento de origem ao servir JPG, PNG e WebP.
+
 ## 1.9.0 - 2026-08-27
 
 - Adicionado o seletor **Estilo da tela de login** na interface administrativa.

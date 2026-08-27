@@ -120,7 +120,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             <h1 class="h2 mb-1"><i class="ti ti-palette me-2"></i>ESO CSS for GLPI</h1>
             <p class="text-muted mb-0">Personalize cores, cards e gráficos ECharts do GLPI 11 sem editar o core.</p>
         </div>
-        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.0') ?></span>
+        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.1') ?></span>
     </div>
 
     <form method="post" action="<?= htmlspecialchars($settingsFormUrl, ENT_QUOTES, 'UTF-8') ?>" autocomplete="off" enctype="multipart/form-data">

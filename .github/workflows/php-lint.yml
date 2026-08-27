@@ -22,6 +22,8 @@ jobs:
         run: php tests/menu-smoke.php
       - name: Test anonymous login assets
         run: php tests/setup-smoke.php
+      - name: Test anonymous managed media
+        run: php tests/media-smoke.php
       - name: Test settings migration on install
         run: php tests/install-smoke.php
       - name: Check JavaScript syntax

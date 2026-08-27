@@ -4,7 +4,7 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 
 **Autor:** Everton Silva de Oliveira<br>
 **Identificador técnico do plugin:** `esocss`<br>
-**Versão:** 1.9.0<br>
+**Versão:** 1.9.1<br>
 **Compatibilidade:** GLPI 11.0.0 até 11.0.99
 
 ## Recursos
@@ -158,7 +158,7 @@ Caso exista uma regra WAF para extensões PHP, adicione uma exceção restrita a
 
 O arquivo `front/config.php` foi mantido somente para redirecionar favoritos antigos e não processa mais salvamentos.
 
-A personalização anônima do login usa o gancho oficial `display_login`; ela não cria endpoint PHP público novo e não exige outra exceção no WAF.
+A personalização anônima do login usa o gancho oficial `display_login`. As imagens são entregues pelo endereço sem extensão PHP `/plugins/esocss/media/`, que aceita somente JPG, PNG e WebP previamente validados e gerenciados pelo plugin. Em condições normais, esse caminho não exige exceção adicional para regras WAF baseadas em extensão.
 
 ## Interface de configuração
 
@@ -257,6 +257,8 @@ Se o título for deixado vazio, o texto fornecido pelo GLPI ou pelo plugin de lo
 
 As imagens usam a mesma validação segura da página inicial e permanecem em `files/_plugins/esocss` durante atualizações automáticas.
 
+Para permitir que o navegador ainda anônimo carregue a imagem, o plugin usa `/plugins/esocss/media/`. A rota é somente leitura, rejeita caminhos arbitrários e não fornece arquivos que estejam fora da pasta privada do ESO CSS.
+
 ## ECharts no GLPI 11
 
 O Dashboard do GLPI 11 usa Apache ECharts e inicializa os gráficos aproximadamente assim:
@@ -280,7 +282,7 @@ sudo -u www-data php bin/console glpi:plugin:list | grep esocss
 Esperado:
 
 ```text
-esocss | ESO CSS for GLPI | 1.9.0 | Habilitado
+esocss | ESO CSS for GLPI | 1.9.1 | Habilitado
 ```
 
 ### Confirmar CSS
@@ -308,6 +310,16 @@ Esperado:
 HTTP/1.1 200 OK
 Content-Type: application/javascript
 ```
+
+### Confirmar imagem pública do login
+
+Copie o endereço `background_url` exibido na configuração pública do login e confirme que ele começa com:
+
+```text
+/plugins/esocss/media/?name=login-background-
+```
+
+Ao abrir esse endereço em uma janela anônima, a resposta deve ser a própria imagem com `Content-Type: image/jpeg`, `image/png` ou `image/webp`, nunca uma página HTML de acesso negado.
 
 ### Confirmar endpoint de configuração
 

@@ -10,7 +10,7 @@ final class Config
     }
 }
 
-define('PLUGIN_ESOCSS_VERSION', '1.9.0');
+define('PLUGIN_ESOCSS_VERSION', '1.9.1');
 
 require_once __DIR__ . '/../src/Settings.php';
 require_once __DIR__ . '/../src/Updater.php';
@@ -29,7 +29,7 @@ function assertUpdaterValue(mixed $expected, mixed $actual, string $message): vo
     }
 }
 
-assertUpdaterValue('1.9.0', Updater::currentVersion(), 'A versão atual deve vir da constante do plugin.');
+assertUpdaterValue('1.9.1', Updater::currentVersion(), 'A versão atual deve vir da constante do plugin.');
 
 Config::$values[Settings::CONTEXT] = [
     'update_latest_version' => '2.0.0',

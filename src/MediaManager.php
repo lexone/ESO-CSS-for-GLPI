@@ -57,6 +57,12 @@ final class MediaManager
         'image/webp' => 'webp',
     ];
 
+    private const EXTENSION_MIMES = [
+        'jpg'  => 'image/jpeg',
+        'png'  => 'image/png',
+        'webp' => 'image/webp',
+    ];
+
     /**
      * @return array{
      *     home_background_image: string,
@@ -123,8 +129,58 @@ final class MediaManager
         $rootDoc = rtrim((string) ($CFG_GLPI['root_doc'] ?? ''), '/');
         $version = (string) (filemtime($path) ?: 0);
 
-        return $rootDoc . '/front/pluginimage.send.php?plugin=esocss&name=' . rawurlencode($filename)
+        return $rootDoc . '/plugins/esocss/media/?name=' . rawurlencode($filename)
             . '&v=' . rawurlencode($version);
+    }
+
+    /**
+     * Resolve a managed image for the anonymous, read-only media endpoint.
+     *
+     * @return null|array{path: string, mime: string, size: int, modified: int}
+     */
+    public static function publicFile(string $filename): ?array
+    {
+        if (!self::isManagedFilename($filename) || !defined('GLPI_PLUGIN_DOC_DIR')) {
+            return null;
+        }
+
+        $directory = self::storageDirectory();
+        $directoryPath = realpath($directory);
+        $filePath = realpath($directory . DIRECTORY_SEPARATOR . $filename);
+        if (
+            $directoryPath === false
+            || $filePath === false
+            || !str_starts_with($filePath, $directoryPath . DIRECTORY_SEPARATOR)
+            || !is_file($filePath)
+            || is_link($filePath)
+        ) {
+            return null;
+        }
+
+        $extension = strtolower((string) pathinfo($filePath, PATHINFO_EXTENSION));
+        $expectedMime = self::EXTENSION_MIMES[$extension] ?? '';
+        if ($expectedMime === '') {
+            return null;
+        }
+
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $detectedMime = (string) $finfo->file($filePath);
+        if ($detectedMime !== $expectedMime || !is_array(@getimagesize($filePath))) {
+            return null;
+        }
+
+        $size = filesize($filePath);
+        $modified = filemtime($filePath);
+        if ($size === false || $size < 1 || $size > self::MAX_UPLOAD_BYTES || $modified === false) {
+            return null;
+        }
+
+        return [
+            'path'     => $filePath,
+            'mime'     => $expectedMime,
+            'size'     => $size,
+            'modified' => $modified,
+        ];
     }
 
     public static function isManagedFilename(string $filename): bool

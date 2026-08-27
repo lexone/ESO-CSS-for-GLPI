@@ -29,6 +29,7 @@ jobs:
           php tests/updater-smoke.php
           php tests/menu-smoke.php
           php tests/setup-smoke.php
+          php tests/media-smoke.php
           php tests/install-smoke.php
           node --check public/js/eso-theme.js
           bash -n scripts/install.sh scripts/update.sh

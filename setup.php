@@ -8,14 +8,26 @@
  */
 
 use Glpi\Plugin\Hooks;
+use Glpi\Http\Firewall;
+use Glpi\Http\SessionManager;
 use GlpiPlugin\EsoCss\Settings;
 
 require_once __DIR__ . '/src/Settings.php';
 require_once __DIR__ . '/src/Updater.php';
 
-define('PLUGIN_ESOCSS_VERSION', '1.9.0');
+define('PLUGIN_ESOCSS_VERSION', '1.9.1');
 define('PLUGIN_ESOCSS_MIN_GLPI', '11.0.0');
 define('PLUGIN_ESOCSS_MAX_GLPI', '11.0.99');
+
+function plugin_esocss_boot(): void
+{
+    Firewall::addPluginStrategyForLegacyScripts(
+        'esocss',
+        '#^/media/index\.php$#',
+        Firewall::STRATEGY_NO_CHECK,
+    );
+    SessionManager::registerPluginStatelessPath('esocss', '#^/media/index\.php$#');
+}
 
 function plugin_init_esocss(): void
 {
