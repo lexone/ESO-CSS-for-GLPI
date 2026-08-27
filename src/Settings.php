@@ -18,6 +18,7 @@ final class Settings
             'home_enabled'         => '0',
             'home_hide_scenes'     => '0',
             'login_enabled'        => '0',
+            'login_style'          => 'classic',
             'login_image_mode'     => 'panel',
             'login_layout'         => 'center',
 
@@ -284,6 +285,10 @@ final class Settings
         $out['login_image_mode'] = in_array($imageMode, ['panel', 'background'], true)
             ? $imageMode
             : 'panel';
+        $loginStyle = strtolower(trim((string) ($input['login_style'] ?? 'classic')));
+        $out['login_style'] = in_array($loginStyle, ['classic', 'glass', 'portal'], true)
+            ? $loginStyle
+            : 'classic';
         $loginLayout = strtolower(trim((string) ($input['login_layout'] ?? 'center')));
         $out['login_layout'] = in_array($loginLayout, ['center', 'left', 'right'], true)
             ? $loginLayout
@@ -393,6 +398,7 @@ final class Settings
             'background_url'      => MediaManager::publicUrl($c['login_background_image']),
             'logo_url'            => MediaManager::publicUrl($c['login_logo_image']),
             'favicon_url'         => MediaManager::publicUrl($c['brand_favicon_image']),
+            'style'               => $c['login_style'],
             'image_mode'          => $c['login_image_mode'],
             'layout'              => $c['login_layout'],
             'background_position' => $c['login_background_position'],

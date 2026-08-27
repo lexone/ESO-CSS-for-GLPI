@@ -10,7 +10,7 @@ final class Config
     }
 }
 
-define('PLUGIN_ESOCSS_VERSION', '1.8.0');
+define('PLUGIN_ESOCSS_VERSION', '1.9.0');
 
 require_once __DIR__ . '/../src/Settings.php';
 require_once __DIR__ . '/../src/Updater.php';
@@ -29,18 +29,18 @@ function assertUpdaterValue(mixed $expected, mixed $actual, string $message): vo
     }
 }
 
-assertUpdaterValue('1.8.0', Updater::currentVersion(), 'A versão atual deve vir da constante do plugin.');
+assertUpdaterValue('1.9.0', Updater::currentVersion(), 'A versão atual deve vir da constante do plugin.');
 
 Config::$values[Settings::CONTEXT] = [
-    'update_latest_version' => '1.9.0',
+    'update_latest_version' => '2.0.0',
     'update_checked_at'     => '2026-08-26 12:00:00',
-    'update_release_url'    => 'https://github.com/lexone/ESO-CSS-for-GLPI/releases/tag/v1.9.0',
+    'update_release_url'    => 'https://github.com/lexone/ESO-CSS-for-GLPI/releases/tag/v2.0.0',
 ];
 
 $state = Updater::getCachedState();
 assertUpdaterValue(true, $state['checked'], 'Uma consulta válida deve ser reconhecida.');
 assertUpdaterValue(true, $state['available'], 'Uma versão superior deve aparecer como disponível.');
-assertUpdaterValue('1.9.0', $state['latest_version'], 'A versão remota deve ser preservada.');
+assertUpdaterValue('2.0.0', $state['latest_version'], 'A versão remota deve ser preservada.');
 
 Config::$values[Settings::CONTEXT]['update_release_url'] = 'https://example.com/falso';
 $state = Updater::getCachedState();

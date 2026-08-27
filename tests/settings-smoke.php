@@ -27,10 +27,15 @@ function assertSameValue(mixed $expected, mixed $actual, string $message): void
 }
 
 $defaults = Settings::defaults();
+$settingsPage = file_get_contents(__DIR__ . '/../front/settings.php');
+assertSameValue(true, str_contains($settingsPage, 'name="login_style"'), 'A interface deve exibir o seletor de estilo do login.');
+assertSameValue(true, str_contains($settingsPage, 'Vidro central'), 'A interface deve oferecer o modelo Vidro central.');
+assertSameValue(true, str_contains($settingsPage, 'Portal lateral'), 'A interface deve oferecer o modelo Portal lateral.');
 assertSameValue('#FFFFFF', $defaults['menu_background'], 'O menu precisa de uma cor de fundo padrão.');
 assertSameValue('#374151', $defaults['menu_text_color'], 'O menu precisa de texto legível por padrão.');
 assertSameValue('#FFFFFF', $defaults['button_text_color'], 'Botões principais precisam de texto legível por padrão.');
 assertSameValue('720', $defaults['login_panel_width'], 'O painel interno do login precisa de uma largura segura.');
+assertSameValue('classic', $defaults['login_style'], 'O estilo atual deve ser preservado por padrão.');
 assertSameValue('panel', $defaults['login_image_mode'], 'Novas instalações devem usar a imagem em painel separado.');
 assertSameValue('center', $defaults['login_layout'], 'O login deve começar centralizado.');
 assertSameValue('65', $defaults['login_media_width'], 'O painel de imagem precisa de uma largura equilibrada.');
@@ -88,6 +93,7 @@ $sanitized = Settings::sanitize([
     'login_user_placeholder' => "  usuario\ncorporativo  ",
     'login_footer_text'      => '<a>Central</a> de Serviços',
     'login_background_position' => 'diagonal',
+    'login_style'            => 'portal',
     'login_image_mode'       => 'iframe',
     'login_layout'           => 'diagonal',
     'login_card_color'       => '#fefefe',
@@ -130,6 +136,7 @@ assertSameValue('Entrar com conta corporativa', $sanitized['login_sso_button_tex
 assertSameValue('usuario corporativo', $sanitized['login_user_placeholder'], 'O exemplo de usuário deve ser normalizado.');
 assertSameValue('Central de Serviços', $sanitized['login_footer_text'], 'O rodapé não deve aceitar HTML.');
 assertSameValue('center', $sanitized['login_background_position'], 'A posição inválida do login deve usar o centro.');
+assertSameValue('portal', $sanitized['login_style'], 'O modelo lateral deve ser aceito.');
 assertSameValue('panel', $sanitized['login_image_mode'], 'Modos de imagem inválidos devem usar o painel separado.');
 assertSameValue('center', $sanitized['login_layout'], 'Posições inválidas do login devem usar o centro.');
 assertSameValue('#FEFEFE', $sanitized['login_card_color'], 'As cores do login devem ser normalizadas.');
@@ -153,9 +160,13 @@ assertSameValue(1200, $loginPayload['card_width'], 'A largura pública do login 
 assertSameValue(320, $loginPayload['panel_width'], 'A largura pública do painel interno deve ser numérica.');
 assertSameValue(75, $loginPayload['media_width'], 'A largura pública do painel de imagem deve ser numérica.');
 assertSameValue('panel', $loginPayload['image_mode'], 'O modo público da imagem deve ser sanitizado.');
+assertSameValue('portal', $loginPayload['style'], 'O modelo público do login deve ser sanitizado.');
 assertSameValue('center', $loginPayload['layout'], 'A posição pública do login deve ser sanitizada.');
 assertSameValue('', $loginPayload['logo_url'], 'Sem arquivo gerenciado não deve existir URL pública do logotipo.');
 assertSameValue('', $loginPayload['favicon_url'], 'Sem arquivo gerenciado não deve existir favicon público.');
 assertSameValue(false, array_key_exists('custom_css', $loginPayload), 'CSS administrativo não pode ser exposto no login anônimo.');
+
+$invalidStyle = Settings::sanitize(['login_style' => 'iframe']);
+assertSameValue('classic', $invalidStyle['login_style'], 'Modelos de login inválidos devem usar o estilo compatível.');
 
 fwrite(STDOUT, "Settings smoke test: OK\n");

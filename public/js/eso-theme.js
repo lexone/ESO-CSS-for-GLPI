@@ -302,6 +302,56 @@
         applyCustomFooterText(texts.footer);
     }
 
+    function syncLoginHero(login = {}, style = 'classic') {
+        const page = document.querySelector('body.welcome-anonymous .page-anonymous');
+        const container = page?.querySelector('.container-tight');
+        const card = container?.querySelector('.main-content-card');
+        let hero = document.getElementById('esocss-login-hero');
+
+        if (!page || !['glass', 'portal'].includes(style) || (!login.title && !login.subtitle)) {
+            hero?.remove();
+            return;
+        }
+
+        if (!hero) {
+            hero = document.createElement('section');
+            hero.id = 'esocss-login-hero';
+            hero.className = 'eso-login-hero';
+            hero.setAttribute('aria-label', 'Apresentação da área de acesso');
+
+            const accent = document.createElement('span');
+            accent.className = 'eso-login-hero-accent';
+            accent.setAttribute('aria-hidden', 'true');
+
+            const title = document.createElement('strong');
+            title.className = 'eso-login-hero-title';
+
+            const subtitle = document.createElement('p');
+            subtitle.className = 'eso-login-hero-subtitle';
+
+            hero.append(accent, title, subtitle);
+        }
+
+        hero.classList.toggle('eso-login-hero--glass', style === 'glass');
+        hero.classList.toggle('eso-login-hero--portal', style === 'portal');
+        if (style === 'glass' && container && card) {
+            container.insertBefore(hero, card);
+        } else {
+            page.appendChild(hero);
+        }
+
+        const title = hero.querySelector('.eso-login-hero-title');
+        const subtitle = hero.querySelector('.eso-login-hero-subtitle');
+        if (title) {
+            title.textContent = login.title || '';
+            title.hidden = !login.title;
+        }
+        if (subtitle) {
+            subtitle.textContent = login.subtitle || '';
+            subtitle.hidden = !login.subtitle;
+        }
+    }
+
     function applyLoginTheme(login = {}) {
         const body = document.body;
         if (!body?.classList.contains('welcome-anonymous')) return;
@@ -317,13 +367,28 @@
             'eso-login-image-background',
             'eso-login-align-center',
             'eso-login-align-left',
-            'eso-login-align-right'
+            'eso-login-align-right',
+            'eso-login-style-classic',
+            'eso-login-style-glass',
+            'eso-login-style-portal'
         );
-        if (!enabled) return;
+        if (!enabled) {
+            syncLoginHero({}, 'classic');
+            return;
+        }
 
-        const imageMode = ['panel', 'background'].includes(login.image_mode) ? login.image_mode : 'panel';
-        const layout = ['center', 'left', 'right'].includes(login.layout) ? login.layout : 'center';
-        body.classList.add(`eso-login-image-${imageMode}`, `eso-login-align-${layout}`);
+        const style = ['classic', 'glass', 'portal'].includes(login.style) ? login.style : 'classic';
+        const configuredImageMode = ['panel', 'background'].includes(login.image_mode) ? login.image_mode : 'panel';
+        const configuredLayout = ['center', 'left', 'right'].includes(login.layout) ? login.layout : 'center';
+        const imageMode = style === 'classic' ? configuredImageMode : 'background';
+        const layout = style === 'glass'
+            ? 'center'
+            : (style === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout);
+        body.classList.add(
+            `eso-login-image-${imageMode}`,
+            `eso-login-align-${layout}`,
+            `eso-login-style-${style}`
+        );
 
         const overlayOpacity = Math.max(0, Math.min(90, Number(login.overlay_opacity || 0))) / 100;
         const cardOpacity = Math.max(70, Math.min(100, Number(login.card_opacity || 98))) / 100;
@@ -342,9 +407,10 @@
         setCssVariable('--eso-login-card-radius', `${Math.max(0, Math.min(40, Number(login.card_radius || 16)))}px`);
         setCssVariable('--eso-login-logo-image', cssUrl(login.logo_url));
         setCssVariable('--eso-login-logo-height', `${Math.max(24, Math.min(180, Number(login.logo_max_height || 78)))}px`);
+        syncLoginHero(login, style);
 
         const headings = findLoginHeadings();
-        if (login.title) {
+        if (login.title && style === 'classic') {
             headings.forEach((candidate) => {
                 if (!candidate.dataset.esoOriginalTitle) {
                     candidate.dataset.esoOriginalTitle = candidate.textContent.trim();
@@ -354,7 +420,9 @@
                 }
             });
         }
-        const heading = headings.find((candidate) => candidate.offsetParent !== null) || headings[0] || null;
+        const heading = style !== 'classic'
+            ? null
+            : (headings.find((candidate) => candidate.offsetParent !== null) || headings[0] || null);
         if (heading) {
             if (!heading.dataset.esoOriginalTitle) {
                 heading.dataset.esoOriginalTitle = heading.textContent.trim();

@@ -4,7 +4,7 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 
 **Autor:** Everton Silva de Oliveira<br>
 **Identificador técnico do plugin:** `esocss`<br>
-**Versão:** 1.8.0<br>
+**Versão:** 1.9.0<br>
 **Compatibilidade:** GLPI 11.0.0 até 11.0.99
 
 ## Recursos
@@ -24,7 +24,8 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 - Temas rápidos ESO Azul, Oceano e Grafite.
 - Verificação de versão e atualização automática pela interface administrativa.
 - Personalização da página inicial Helpdesk com fundo, logotipo, título, subtítulo e prévia.
-- Personalização da tela de login com imagem em painel separado ou fundo legado, posição central/esquerda/direita, logotipo, textos, cores e prévia responsiva.
+- Três estilos selecionáveis para a tela de login: personalizado atual, Vidro central e Portal lateral.
+- Personalização da tela de login com imagem em painel separado ou tela cheia, posição central/esquerda/direita, logotipo, textos, cores e prévia responsiva.
 - Compatibilidade visual com login único/Entra ID sem alterar o fluxo de autenticação.
 - Textos personalizáveis para SSO, formulário nativo, permanência, recuperação, FAQ e rodapé.
 - Logotipos globais configuráveis para menu lateral aberto, menu recolhido e cabeçalho/Helpdesk.
@@ -242,7 +243,9 @@ As ilustrações esquerda e direita continuam sendo configuradas pelo recurso na
 
 ## Tela de login e login único
 
-Na seção **Tela de login** é possível usar a imagem em um painel separado, sem colocá-la atrás do formulário. O login pode ficar centralizado, à esquerda ou à direita; nesta última opção, a imagem ocupa o lado esquerdo em um layout semelhante ao ST Login. Também permanece disponível o modo legado, que usa a imagem como fundo da página. O plugin reconhece a estrutura `.singlesignon-*` usada pelo login único/Entra ID.
+Na seção **Tela de login**, o campo **Estilo da tela de login** permite escolher entre o modelo personalizado já existente, **Vidro central** e **Portal lateral**. Os dois novos modelos usam a fotografia em tela cheia com sobreposição e um único painel translúcido; o Portal lateral também exibe o título e o subtítulo no lado livre da imagem. Logo, foto, cores, transparência, textos e posição continuam configuráveis.
+
+No estilo personalizado atual também é possível usar a imagem em um painel separado, sem colocá-la atrás do formulário. O login pode ficar centralizado, à esquerda ou à direita; nesta última opção, a imagem ocupa o lado esquerdo em um layout semelhante ao ST Login. O plugin reconhece a estrutura `.singlesignon-*` usada pelo login único/Entra ID.
 
 Em telas menores que 900 px, o painel de imagem é ocultado automaticamente e o formulário volta ao centro para preservar a leitura e o acesso aos campos.
 
@@ -277,7 +280,7 @@ sudo -u www-data php bin/console glpi:plugin:list | grep esocss
 Esperado:
 
 ```text
-esocss | ESO CSS for GLPI | 1.8.0 | Habilitado
+esocss | ESO CSS for GLPI | 1.9.0 | Habilitado
 ```
 
 ### Confirmar CSS

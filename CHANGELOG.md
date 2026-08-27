@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.9.0 - 2026-08-27
+
+- Adicionado o seletor **Estilo da tela de login** na interface administrativa.
+- Adicionado o modelo **Vidro central**, com fotografia em tela cheia e um único cartão translúcido.
+- Adicionado o modelo **Portal lateral**, com painel de acesso lateral e título/subtítulo sobre a área livre da fotografia.
+- Mantido o modelo personalizado anterior como opção de compatibilidade.
+- Os novos estilos reutilizam as imagens, logotipo, cores, transparência e textos configurados, sem alterar o fluxo de autenticação do GLPI ou do Entra ID.
+- Adicionadas prévias responsivas dos novos estilos e adaptação automática para telas menores.
+
 ## 1.8.0 - 2026-08-26
 
 - Adicionado o modo de imagem em painel separado, sem transformar a imagem em fundo da página.

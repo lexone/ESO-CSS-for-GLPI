@@ -11,7 +11,7 @@
         .card { display: block; }
         .row { display: flex; flex-wrap: wrap; gap: 20px; }
         .col-md-5 { width: 100%; max-width: 470px; margin-inline: auto; }
-        .col-auto { width: 100%; max-width: 320px; margin-inline: auto; }
+        .col-auto { width: auto; margin-inline: auto; }
         .card-header:empty { display: none; }
         .form-label { display: block; margin: 0 0 7px; font-weight: 650; }
         .form-control { display: block; width: 100%; padding: 10px 12px; }
@@ -21,6 +21,39 @@
         .form-check { display: flex; margin: 12px 0; align-items: center; gap: 7px; }
         .forgot_password, .faq { margin-top: 10px; text-align: center; }
         .glpi-logo { display: inline-flex; width: 230px; height: 70px; align-items: center; justify-content: center; color: #3157d5; font-size: 25px; font-weight: 800; letter-spacing: .08em; }
+        .d-flex { display: flex; }
+        .ms-auto { margin-left: auto; }
+        .text-muted { color: #667085; }
+        .singlesignon-login {
+            margin: 24px auto 0;
+            padding: 18px 16px 16px;
+            border: 1px solid rgba(17, 24, 39, .08);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .9);
+            box-shadow: 0 14px 30px -22px rgba(15, 23, 42, .65);
+        }
+        .singlesignon-login-title { margin: 0 0 14px; font-size: 18px; }
+        .singlesignon-login-button {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            gap: 12px;
+            color: #4b5563;
+            text-decoration: none;
+            background: rgba(255, 255, 255, .9);
+            border: 1px solid rgba(17, 24, 39, .12);
+            border-radius: 12px;
+        }
+        .singlesignon-login-visual,
+        .singlesignon-login-remember-icon { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 10px; background: rgba(49, 87, 213, .12); }
+        .singlesignon-login-label { min-width: 0; overflow: hidden; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
+        .singlesignon-login-remember { margin-top: 16px; padding-top: 15px; border-top: 1px solid rgba(17, 24, 39, .08); }
+        .singlesignon-login-remember-inner { display: flex; gap: 10px; padding: 11px 13px; align-items: flex-start; border: 1px solid rgba(49, 87, 213, .18); border-radius: 10px; background: rgba(49, 87, 213, .07); }
+        .singlesignon-login-remember-label { flex: 1 1 auto; align-items: flex-start; margin: 0; }
+        .singlesignon-login-remember-title,
+        .singlesignon-login-remember-hint { display: block; }
+        .singlesignon-login-remember-hint { margin-top: 3px; font-size: 13px; }
+        .singlesignon-login-classic { margin-top: 15px; text-align: center; }
+        .singlesignon-login-classic .btn { width: auto; color: #667085; background: transparent; border: 0; text-decoration: none; }
         footer { padding: 18px; text-align: center; }
     </style>
     <link rel="stylesheet" href="../../public/css/eso-modern.css">
@@ -34,33 +67,66 @@
                     <div class="card-header"></div>
                     <div class="card-body">
                         <form>
+                            <div class="rich_text_container text-center">Texto original de boas-vindas</div>
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="card-header mb-4 text-center"><h2>Login</h2></div>
-                                    <div class="rich_text_container text-center">Texto original de boas-vindas</div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="login_name">Login</label>
-                                        <input class="form-control" id="login_name">
+                                    <div class="singlesignon-auth-stack is-oauth-available" data-sso-default-mode="oauth">
+                                        <section class="singlesignon-auth-section singlesignon-auth-section--oauth singlesignon-auth-pane text-center" data-sso-pane="oauth">
+                                            <div class="singlesignon-login">
+                                                <h3 class="singlesignon-login-title text-center">Logon Único</h3>
+                                                <div class="singlesignon-login-buttons" role="list">
+                                                    <a class="btn singlesignon-login-button singlesignon-login-button--icon" href="#sso" role="listitem">
+                                                        <span class="singlesignon-login-visual" aria-hidden="true">&#128274;</span>
+                                                        <span class="singlesignon-login-label">Login with Microsoft</span>
+                                                        <span class="singlesignon-login-arrow" aria-hidden="true">&#8250;</span>
+                                                    </a>
+                                                </div>
+                                                <div class="singlesignon-login-remember" role="group" aria-label="Session options">
+                                                    <div class="singlesignon-login-remember-inner">
+                                                        <span class="singlesignon-login-remember-icon" aria-hidden="true">&#128737;</span>
+                                                        <label class="singlesignon-login-remember-label form-check" for="singlesignon_login_remember">
+                                                            <input id="singlesignon_login_remember" type="checkbox" checked>
+                                                            <span class="form-check-label">
+                                                                <span class="singlesignon-login-remember-title">Remember me</span>
+                                                                <small class="singlesignon-login-remember-hint text-muted">Stay signed in on this browser until you sign out.</small>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="singlesignon-login-classic text-center">
+                                                <a class="btn btn-link" href="#form" data-sso-switch="classic">Use GLPI login form</a>
+                                            </div>
+                                        </section>
+                                        <section class="singlesignon-auth-section singlesignon-auth-section--classic singlesignon-auth-pane" data-sso-pane="classic" style="display:none">
+                                            <div class="card-header mb-4 text-center singlesignon-classic-title"><h2>Login to your account</h2></div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="login_name">Login</label>
+                                                <input class="form-control" id="login_name">
+                                            </div>
+                                            <div class="mb-4">
+                                                <div class="d-flex">
+                                                    <label class="form-label" for="login_password">Password</label>
+                                                    <span class="ms-auto form-label-description forgot_password"><a href="#forgot">Forgotten password?</a></span>
+                                                </div>
+                                                <input class="form-control" id="login_password" type="password">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label" for="dropdown_auth_test">Login source</label>
+                                                <select class="form-control" id="dropdown_auth_test"><option>Local</option></select>
+                                            </div>
+                                            <label class="form-check" for="login_remember">
+                                                <input id="login_remember" type="checkbox"><span class="form-check-label">Remember me</span>
+                                            </label>
+                                            <button class="btn btn-primary" name="submit" type="button">Sign in</button>
+                                            <div class="singlesignon-login-classic text-center">
+                                                <a class="btn btn-link" href="#sso" data-sso-switch="oauth">Use Single Sign-on</a>
+                                            </div>
+                                        </section>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="login_password">Password</label>
-                                        <input class="form-control" id="login_password" type="password">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="dropdown_auth_test">Login source</label>
-                                        <select class="form-control" id="dropdown_auth_test"><option>Local</option></select>
-                                    </div>
-                                    <label class="form-check" for="login_remember">
-                                        <input id="login_remember" type="checkbox"><span class="form-check-label">Remember me</span>
-                                    </label>
-                                    <button class="btn btn-primary" name="submit" type="button">Sign in</button>
-                                    <div class="forgot_password"><a href="#forgot">Forgotten password?</a></div>
                                 </div>
                                 <div class="col-auto">
-                                    <a class="btn" href="#sso"><i>🔒</i><span>Login with Microsoft</span></a>
-                                    <label class="form-check remember-sso"><input type="checkbox"><span>Remember this browser</span></label>
-                                    <a href="#form">Use GLPI login form</a>
-                                    <script type="application/json" id="esocss-login-config">{"enabled":true,"title":"Logon Único","subtitle":"Acesse com sua conta institucional","texts":{"welcome":"Bem-vindo à Central de Serviços","sso_button":"Acessar com conta institucional","remember":"Continuar conectado","form_toggle":"Entrar com usuário e senha","user_label":"E-mail institucional","user_placeholder":"nome@empresa.exemplo","password_label":"Senha","password_placeholder":"Digite sua senha","source_label":"Origem do acesso","submit":"Acessar","forgot_password":"Recuperar minha senha","faq":"Central de ajuda","footer":"Central de Serviços"},"background_url":"","logo_url":"","image_mode":"panel","layout":"right","background_position":"center","background_color":"#F3F4F6","card_color":"#FFFFFF","text_color":"#1F2937","muted_color":"#667085","primary_color":"#3157D5","border_color":"#DDE3EC","overlay_color":"#FFFFFF","overlay_opacity":12,"card_opacity":98,"card_width":920,"panel_width":720,"media_width":65,"card_radius":16,"logo_max_height":78}</script>
+                                    <script type="application/json" id="esocss-login-config">{"enabled":true,"title":"Portal de Atendimento","subtitle":"Conte com nossa equipe para resolver suas solicitações.","texts":{"welcome":"Acesse sua conta","sso_button":"Entrar com Microsoft","remember":"Lembrar de mim","form_toggle":"Usar formulário de login do GLPI","user_label":"E-mail institucional","user_placeholder":"nome@empresa.exemplo","password_label":"Senha","password_placeholder":"Digite sua senha","source_label":"Origem do acesso","submit":"Acessar","forgot_password":"Recuperar minha senha","faq":"Central de ajuda","footer":"Central de Serviços"},"background_url":"","logo_url":"","style":"portal","image_mode":"panel","layout":"right","background_position":"center","background_color":"#07172F","card_color":"#EAF0F8","text_color":"#17233C","muted_color":"#5F6F86","primary_color":"#3157D5","border_color":"#DDE3EC","overlay_color":"#07172F","overlay_opacity":58,"card_opacity":82,"card_width":920,"panel_width":720,"media_width":65,"card_radius":18,"logo_max_height":78}</script>
                                 </div>
                             </div>
                             <div class="faq"><a class="btn" href="/front/helpdesk.faq.php"><i>?</i> FAQ</a></div>
@@ -71,6 +137,51 @@
             </div>
         </div>
     </main>
+    <script>
+        const fixtureParams = new URLSearchParams(window.location.search);
+        const fixtureMarker = document.getElementById('esocss-login-config');
+        const fixtureConfig = JSON.parse(fixtureMarker.textContent);
+        const requestedStyle = fixtureParams.get('style');
+        if (['classic', 'glass', 'portal'].includes(requestedStyle)) {
+            fixtureConfig.style = requestedStyle;
+        }
+        if (requestedStyle === 'glass') {
+            Object.assign(fixtureConfig, {
+                card_color: '#172A47',
+                text_color: '#F7FAFF',
+                muted_color: '#B9C6D9',
+                border_color: '#8CA3C5',
+                primary_color: '#67A2FF',
+                overlay_opacity: 52,
+                card_opacity: 68
+            });
+        }
+        if (requestedStyle === 'portal') {
+            Object.assign(fixtureConfig, {
+                card_color: '#2A3F5D',
+                text_color: '#F7FAFF',
+                muted_color: '#C6D1E0',
+                border_color: '#8CA3C5',
+                primary_color: '#FFBE3F',
+                overlay_opacity: 48,
+                card_opacity: 78
+            });
+        }
+        if (fixtureParams.get('background') === '1') {
+            fixtureConfig.background_url = '../../../qa-assets/helpdesk-background.png';
+        }
+        fixtureMarker.textContent = JSON.stringify(fixtureConfig);
+
+        document.addEventListener('click', (event) => {
+            const switchLink = event.target.closest('[data-sso-switch]');
+            if (!switchLink) return;
+            event.preventDefault();
+            const mode = switchLink.getAttribute('data-sso-switch');
+            document.querySelectorAll('[data-sso-pane]').forEach((pane) => {
+                pane.style.display = pane.getAttribute('data-sso-pane') === mode ? '' : 'none';
+            });
+        });
+    </script>
     <script src="../../public/js/eso-theme.js"></script>
 </body>
 </html>

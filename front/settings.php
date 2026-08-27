@@ -120,7 +120,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             <h1 class="h2 mb-1"><i class="ti ti-palette me-2"></i>ESO CSS for GLPI</h1>
             <p class="text-muted mb-0">Personalize cores, cards e gráficos ECharts do GLPI 11 sem editar o core.</p>
         </div>
-        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.8.0') ?></span>
+        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.0') ?></span>
     </div>
 
     <form method="post" action="<?= htmlspecialchars($settingsFormUrl, ENT_QUOTES, 'UTF-8') ?>" autocomplete="off" enctype="multipart/form-data">
@@ -449,6 +449,20 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                             ?>
                         </div>
 
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold" for="login_style">Estilo da tela de login</label>
+                                <select class="form-select" id="login_style" name="login_style">
+                                    <option value="classic" <?= $config['login_style'] === 'classic' ? 'selected' : '' ?>>Personalizado atual (compatibilidade)</option>
+                                    <option value="glass" <?= $config['login_style'] === 'glass' ? 'selected' : '' ?>>Vidro central</option>
+                                    <option value="portal" <?= $config['login_style'] === 'portal' ? 'selected' : '' ?>>Portal lateral</option>
+                                </select>
+                                <div class="form-hint">
+                                    Os novos estilos usam a foto em tela cheia. Logo, cores, textos e transparência continuam configuráveis abaixo.
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row g-3 mb-4">
                             <div class="col-md-4">
                                 <label class="form-label fw-semibold" for="login_image_mode">Uso da imagem</label>
@@ -564,6 +578,11 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                             data-logo-url="<?= htmlspecialchars($loginLogoUrl, ENT_QUOTES, 'UTF-8') ?>">
                             <div class="eso-login-preview-overlay">
                                 <div class="eso-login-preview-media" aria-hidden="true"></div>
+                                <div class="eso-login-preview-hero" aria-hidden="true">
+                                    <span class="eso-login-preview-hero-accent"></span>
+                                    <strong class="eso-login-preview-hero-title"></strong>
+                                    <span class="eso-login-preview-hero-subtitle"></span>
+                                </div>
                                 <div class="eso-login-preview-content">
                                     <div class="eso-login-preview-shell">
                                     <div class="eso-login-preview-brand">
@@ -886,9 +905,15 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         const backgroundUrl = removeBackground
             ? ''
             : (preview.dataset.selectedBackgroundUrl || preview.dataset.backgroundUrl || '');
-        const imageMode = $('#login_image_mode')?.value === 'background' ? 'background' : 'panel';
+        const styleValue = $('#login_style')?.value || 'classic';
+        const loginStyle = ['classic', 'glass', 'portal'].includes(styleValue) ? styleValue : 'classic';
+        const configuredImageMode = $('#login_image_mode')?.value === 'background' ? 'background' : 'panel';
         const layoutValue = $('#login_layout')?.value || 'center';
-        const layout = ['center', 'left', 'right'].includes(layoutValue) ? layoutValue : 'center';
+        const configuredLayout = ['center', 'left', 'right'].includes(layoutValue) ? layoutValue : 'center';
+        const imageMode = loginStyle === 'classic' ? configuredImageMode : 'background';
+        const layout = loginStyle === 'glass'
+            ? 'center'
+            : (loginStyle === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout);
         const mediaWidth = Math.max(45, Math.min(75, Number($('#login_media_width')?.value || 65)));
         const imagePosition = $('#login_background_position')?.value || 'center';
         const overlayOpacity = Math.max(0, Math.min(90, Number($('#login_overlay_opacity')?.value || 12))) / 100;
@@ -899,9 +924,16 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             'eso-login-preview-image-background',
             'eso-login-preview-align-center',
             'eso-login-preview-align-left',
-            'eso-login-preview-align-right'
+            'eso-login-preview-align-right',
+            'eso-login-preview-style-classic',
+            'eso-login-preview-style-glass',
+            'eso-login-preview-style-portal'
         );
-        preview.classList.add(`eso-login-preview-image-${imageMode}`, `eso-login-preview-align-${layout}`);
+        preview.classList.add(
+            `eso-login-preview-image-${imageMode}`,
+            `eso-login-preview-align-${layout}`,
+            `eso-login-preview-style-${loginStyle}`
+        );
         preview.style.setProperty('--lp-media-width', mediaWidth + '%');
         preview.style.backgroundColor = $('#login_background_color')?.value || '#F3F4F6';
         preview.style.backgroundImage = imageMode === 'background' && backgroundUrl ? `url("${backgroundUrl}")` : 'none';
@@ -927,6 +959,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         const primaryColor = $('#login_primary_color')?.value || '#3157D5';
         const borderColor = $('#login_border_color')?.value || '#DDE3EC';
         const radius = Math.max(0, Math.min(40, Number($('#login_card_radius')?.value || 16)));
+        preview.style.setProperty('--eso-login-card-preview', cardColor);
         const shell = preview.querySelector('.eso-login-preview-shell');
         const card = preview.querySelector('.eso-login-preview-card');
         [shell, card].forEach(element => {
@@ -952,12 +985,20 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         preview.style.setProperty('--lp-border', borderColor);
 
         const title = preview.querySelector('.eso-login-preview-title');
-        if (title) title.textContent = $('#login_title')?.value.trim() || 'Logon Único';
+        if (title) {
+            title.textContent = loginStyle === 'portal'
+                ? ($('#login_welcome_text')?.value.trim() || 'Acesse sua conta')
+                : ($('#login_title')?.value.trim() || 'Logon Único');
+        }
         const subtitle = preview.querySelector('.eso-login-preview-subtitle');
         if (subtitle) {
             subtitle.textContent = $('#login_subtitle')?.value.trim() || '';
             subtitle.classList.toggle('d-none', subtitle.textContent === '');
         }
+        const heroTitle = preview.querySelector('.eso-login-preview-hero-title');
+        const heroSubtitle = preview.querySelector('.eso-login-preview-hero-subtitle');
+        if (heroTitle) heroTitle.textContent = $('#login_title')?.value.trim() || 'Portal de Atendimento';
+        if (heroSubtitle) heroSubtitle.textContent = $('#login_subtitle')?.value.trim() || '';
 
         const previewText = (selector, field, fallback = '') => {
             const element = preview.querySelector(selector);
@@ -1118,7 +1159,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
     all('input[type="number"]').forEach(input => input.addEventListener('input', syncPreview));
     all('#home_title, #home_subtitle, #home_background_position, #remove_home_background, #remove_home_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
-    all('#login_title, #login_subtitle, #login_image_mode, #login_layout, #login_background_position, #remove_login_background, #remove_login_logo')
+    all('#login_title, #login_subtitle, #login_style, #login_image_mode, #login_layout, #login_background_position, #remove_login_background, #remove_login_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
     all('#remove_brand_sidebar_logo, #remove_brand_sidebar_compact_logo, #remove_brand_header_logo, #remove_brand_favicon')
         .forEach(input => input.addEventListener('input', syncPreview));

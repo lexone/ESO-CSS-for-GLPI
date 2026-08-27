@@ -374,6 +374,218 @@ body.welcome-anonymous.eso-login-custom .singlesignon-login-classic .btn-link:fo
     color: var(--eso-login-primary) !important;
 }
 
+/* Login preset: centered glass composition. */
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .container-tight {
+    width: min(calc(100vw - 32px), 540px) !important;
+    max-width: 540px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .container-tight > .text-center:first-child {
+    margin-bottom: clamp(12px, 2vh, 20px);
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .eso-login-hero {
+    position: static;
+    width: 100%;
+    margin: 0 0 clamp(18px, 3vh, 28px);
+    color: #FFFFFF;
+    text-align: center;
+    text-shadow: 0 2px 20px rgba(3, 14, 35, .4);
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .eso-login-hero-accent {
+    display: none;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .eso-login-hero-title {
+    display: block;
+    font-size: clamp(1.7rem, 3vw, 2.35rem);
+    font-weight: 750;
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .eso-login-hero-subtitle {
+    max-width: 44ch;
+    margin: 10px auto 0;
+    color: rgba(255, 255, 255, .78);
+    line-height: 1.5;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card {
+    background: var(--eso-login-card) !important;
+    border: 1px solid color-mix(in srgb, var(--eso-login-border) 72%, transparent) !important;
+    border-radius: var(--eso-login-card-radius) !important;
+    box-shadow: 0 24px 70px rgba(3, 14, 35, .28) !important;
+    backdrop-filter: blur(24px) saturate(120%);
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card .card-body {
+    padding: clamp(22px, 4vw, 34px) !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .rich_text_container,
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .singlesignon-login-title {
+    display: none !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card form > .row {
+    display: block;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card form > .row > .col-md-5,
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card form > .row > .col-auto {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .singlesignon-login,
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card .card {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .page-anonymous > footer,
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .container-tight > .text-center.text-muted {
+    color: color-mix(in srgb, var(--eso-login-muted) 35%, #FFFFFF) !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-glass .container-tight > .text-center.text-muted {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    margin: 0 !important;
+    transform: translateX(-50%);
+}
+
+/* Login preset: immersive photo with a single side access panel. */
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .page-anonymous > .flex-fill {
+    position: relative;
+    z-index: 2;
+    padding: clamp(22px, 4vh, 46px) clamp(22px, 5vw, 76px) !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .container-tight {
+    display: flex;
+    width: min(calc(100vw - 36px), 450px) !important;
+    max-width: 450px !important;
+    min-height: min(91vh, 940px);
+    padding: clamp(26px, 4vh, 46px) clamp(22px, 3vw, 34px) !important;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--eso-login-card) !important;
+    border: 1px solid color-mix(in srgb, var(--eso-login-border) 70%, transparent) !important;
+    border-radius: var(--eso-login-card-radius) !important;
+    box-shadow: 0 30px 80px rgba(3, 14, 35, .34) !important;
+    backdrop-filter: blur(26px) saturate(118%);
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-right .container-tight {
+    margin-right: 0 !important;
+    margin-left: auto !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-left .container-tight {
+    margin-right: auto !important;
+    margin-left: 0 !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .main-content-card,
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .main-content-card .card,
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .singlesignon-login {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .main-content-card .card-body {
+    padding: 0 !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .main-content-card form > .row {
+    display: block;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .main-content-card form > .row > .col-md-5,
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .main-content-card form > .row > .col-auto {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .eso-login-hero {
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    width: min(42vw, 660px);
+    color: #FFFFFF;
+    pointer-events: none;
+    transform: translateY(-50%);
+    text-shadow: 0 2px 22px rgba(3, 14, 35, .34);
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-right .eso-login-hero {
+    left: clamp(34px, 7vw, 120px);
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-left .eso-login-hero {
+    right: clamp(34px, 7vw, 120px);
+    text-align: right;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .eso-login-hero-accent {
+    display: block;
+    width: 76px;
+    height: 4px;
+    margin-bottom: 22px;
+    background: var(--eso-login-primary);
+    border-radius: 999px;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-left .eso-login-hero-accent {
+    margin-left: auto;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .eso-login-hero-title {
+    display: block;
+    max-width: 18ch;
+    font-size: clamp(2rem, 3.6vw, 4rem);
+    font-weight: 750;
+    line-height: 1.05;
+    text-wrap: balance;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-left .eso-login-hero-title {
+    margin-left: auto;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .eso-login-hero-subtitle {
+    max-width: 48ch;
+    margin: 20px 0 0;
+    color: rgba(255, 255, 255, .78);
+    font-size: clamp(1rem, 1.35vw, 1.2rem);
+    line-height: 1.6;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal.eso-login-align-left .eso-login-hero-subtitle {
+    margin-left: auto;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-style-portal .container-tight > .text-center.text-muted {
+    margin-top: auto !important;
+    padding-top: 28px;
+}
+
 body.welcome-anonymous .eso-login-config-only {
     display: none !important;
 }
@@ -392,6 +604,12 @@ body.welcome-anonymous.eso-login-custom .eso-login-footer-original {
     body.welcome-anonymous.eso-login-custom .main-content-card .card-body {
         padding-inline: 18px !important;
     }
+
+    body.welcome-anonymous.eso-login-custom.eso-login-style-glass .container-tight > .text-center.text-muted {
+        position: static;
+        margin-top: 16px !important;
+        transform: none;
+    }
 }
 
 @media (max-width: 899.98px) {
@@ -407,6 +625,19 @@ body.welcome-anonymous.eso-login-custom .eso-login-footer-original {
 
     body.welcome-anonymous.eso-login-custom.eso-login-image-panel:not(.eso-login-align-center) .container-tight {
         width: min(calc(100vw - 28px), var(--eso-login-card-width)) !important;
+    }
+
+    body.welcome-anonymous.eso-login-custom.eso-login-style-portal .eso-login-hero {
+        display: none;
+    }
+
+    body.welcome-anonymous.eso-login-custom.eso-login-style-portal .page-anonymous > .flex-fill {
+        padding: 18px !important;
+    }
+
+    body.welcome-anonymous.eso-login-custom.eso-login-style-portal .container-tight {
+        min-height: auto;
+        margin-inline: auto !important;
     }
 }
 
@@ -1325,6 +1556,144 @@ body.eso-theme-enabled .alert {
     text-align: center;
 }
 
+#esocss-config-page .eso-login-preview-hero {
+    display: none;
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-overlay {
+    flex-direction: column;
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-hero {
+    display: block;
+    width: min(100%, 430px);
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    text-align: center;
+    text-shadow: 0 2px 14px rgba(3, 14, 35, .4);
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-hero-accent {
+    display: none;
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-content {
+    width: 100%;
+    flex: 0 1 auto;
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-shell {
+    width: min(100%, 430px);
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none;
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-card {
+    padding: 28px;
+    background: color-mix(in srgb, var(--eso-login-card-preview, #FFFFFF) 76%, transparent) !important;
+    box-shadow: 0 20px 50px rgba(3, 14, 35, .28);
+    backdrop-filter: blur(18px);
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-title,
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-subtitle,
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-welcome {
+    display: none !important;
+}
+
+#esocss-config-page .eso-login-preview-style-glass .eso-login-preview-panels,
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-panels {
+    grid-template-columns: 1fr;
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-overlay {
+    position: relative;
+    padding: 22px;
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-hero {
+    position: absolute;
+    left: 7%;
+    display: block;
+    width: 42%;
+    color: #FFFFFF;
+    text-shadow: 0 2px 14px rgba(3, 14, 35, .4);
+}
+
+#esocss-config-page .eso-login-preview-style-portal.eso-login-preview-align-left .eso-login-preview-hero {
+    right: 7%;
+    left: auto;
+    text-align: right;
+}
+
+#esocss-config-page .eso-login-preview-hero-accent {
+    display: block;
+    width: 42px;
+    height: 3px;
+    margin-bottom: 13px;
+    background: var(--lp-primary, #3157D5);
+    border-radius: 999px;
+}
+
+#esocss-config-page .eso-login-preview-align-left .eso-login-preview-hero-accent {
+    margin-left: auto;
+}
+
+#esocss-config-page .eso-login-preview-hero-title {
+    display: block;
+    font-size: clamp(1.25rem, 2.1vw, 2rem);
+    line-height: 1.1;
+}
+
+#esocss-config-page .eso-login-preview-hero-subtitle {
+    display: block;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, .78);
+    font-size: .78rem;
+    line-height: 1.5;
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-content {
+    width: 42%;
+    max-width: 290px;
+    margin-left: auto;
+    flex: 0 0 42%;
+}
+
+#esocss-config-page .eso-login-preview-style-portal.eso-login-preview-align-left .eso-login-preview-content {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-shell {
+    display: flex;
+    min-height: 480px;
+    padding: 22px 18px;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 22px 54px rgba(3, 14, 35, .32);
+    backdrop-filter: blur(18px);
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-card {
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none;
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-brand {
+    min-height: 48px;
+    margin-bottom: 12px;
+}
+
+#esocss-config-page .eso-login-preview-style-portal .eso-login-preview-footer {
+    margin-top: auto;
+    padding-top: 18px;
+}
+
 @media (max-width: 767.98px) {
     #esocss-config-page .eso-login-preview-image-panel:not(.eso-login-preview-align-center) .eso-login-preview-media {
         display: none;
@@ -1332,6 +1701,17 @@ body.eso-theme-enabled .alert {
 
     #esocss-config-page .eso-login-preview-panels {
         grid-template-columns: 1fr;
+    }
+
+    #esocss-config-page .eso-login-preview-style-portal .eso-login-preview-hero {
+        display: none;
+    }
+
+    #esocss-config-page .eso-login-preview-style-portal .eso-login-preview-content {
+        width: 100%;
+        max-width: 430px;
+        margin-inline: auto;
+        flex-basis: 100%;
     }
 }
 
