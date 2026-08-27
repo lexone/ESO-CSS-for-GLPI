@@ -1,0 +1,1211 @@
+/*
+ * ESO CSS for GLPI for GLPI 11
+ * Author: Everton Silva de Oliveira
+ *
+ * The values below are fallbacks. The web configuration page overrides
+ * them at runtime with CSS custom properties.
+ */
+
+:root {
+    --eso-primary: #3157D5;
+    --eso-primary-hover: #2547B5;
+    --eso-button-bg: #3157D5;
+    --eso-button-text: #FFFFFF;
+    --eso-button-hover-bg: #2547B5;
+    --eso-button-hover-text: #FFFFFF;
+    --eso-sidebar-start: #172D55;
+    --eso-sidebar-end: #10213F;
+    --eso-sidebar-text: #F8FAFC;
+    --eso-header-start: #10213F;
+    --eso-header-end: #172D55;
+    --eso-header-text: #F8FAFC;
+    --eso-bg: #F5F7FB;
+    --eso-card: #FFFFFF;
+    --eso-text: #17233C;
+    --eso-muted: #66758C;
+    --eso-border: #E3E8F0;
+    --eso-menu-bg: #FFFFFF;
+    --eso-menu-text: #374151;
+    --eso-menu-hover-bg: #EEF3FF;
+    --eso-menu-hover-text: #2547B5;
+    --eso-radius: 14px;
+    --eso-shadow-alpha: .08;
+    --eso-home-background-image: none;
+    --eso-home-background-position: center;
+    --eso-home-overlay: rgba(16, 33, 63, .38);
+    --eso-home-title-color: #FFFFFF;
+    --eso-home-banner-height: 360px;
+    --eso-home-title-size: 44px;
+    --eso-home-logo-image: none;
+    --eso-home-logo-height: 42px;
+    --eso-login-background-image: none;
+    --eso-login-background-position: center;
+    --eso-login-background: #F3F4F6;
+    --eso-login-overlay: rgba(255, 255, 255, .12);
+    --eso-login-card: rgba(255, 255, 255, .98);
+    --eso-login-text: #1F2937;
+    --eso-login-muted: #667085;
+    --eso-login-primary: #3157D5;
+    --eso-login-border: #DDE3EC;
+    --eso-login-card-width: 920px;
+    --eso-login-panel-width: 720px;
+    --eso-login-card-radius: 16px;
+    --eso-login-logo-image: none;
+    --eso-login-logo-height: 78px;
+    --eso-brand-sidebar-image: none;
+    --eso-brand-sidebar-compact-image: none;
+    --eso-brand-header-image: none;
+    --eso-brand-sidebar-height: 44px;
+    --eso-brand-sidebar-compact-size: 40px;
+    --eso-brand-header-height: 36px;
+}
+
+/* GLPI 11 global branding. These selectors follow the official navbar structure. */
+body.vertical-layout:not(.navbar-collapsed).eso-brand-sidebar
+    .sidebar.navbar-vertical .navbar-brand .glpi-logo {
+    display: block !important;
+    width: min(220px, calc(100% - 16px)) !important;
+    height: var(--eso-brand-sidebar-height) !important;
+    background-image: var(--eso-brand-sidebar-image) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+body.vertical-layout.navbar-collapsed.eso-brand-sidebar-compact
+    .sidebar.navbar-vertical .navbar-brand .glpi-logo {
+    display: block !important;
+    width: var(--eso-brand-sidebar-compact-size) !important;
+    height: var(--eso-brand-sidebar-compact-size) !important;
+    background-image: var(--eso-brand-sidebar-compact-image) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+body.eso-brand-header header[data-testid="main-header"] .navbar-brand .glpi-logo {
+    display: block !important;
+    width: min(220px, 30vw) !important;
+    height: var(--eso-brand-header-height) !important;
+    background-image: var(--eso-brand-header-image) !important;
+    background-position: left center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+body.eso-theme-enabled {
+    background: var(--eso-bg) !important;
+    color: var(--eso-text);
+}
+
+/* GLPI 11 anonymous login (authentication behavior remains native) */
+body.welcome-anonymous.eso-login-custom {
+    min-height: 100vh;
+    color: var(--eso-login-text);
+    background-color: var(--eso-login-background) !important;
+    background-image: linear-gradient(var(--eso-login-overlay), var(--eso-login-overlay)), var(--eso-login-background-image) !important;
+    background-position: center, var(--eso-login-background-position) !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+}
+
+body.welcome-anonymous.eso-login-custom .page-anonymous {
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+body.welcome-anonymous.eso-login-custom .page-anonymous > .flex-fill {
+    min-height: calc(100vh - 70px);
+    margin: 0 !important;
+    padding: clamp(18px, 4vh, 48px) 0 !important;
+}
+
+body.welcome-anonymous.eso-login-custom .container-tight {
+    width: min(calc(100vw - 28px), var(--eso-login-card-width)) !important;
+    max-width: var(--eso-login-card-width) !important;
+    padding: clamp(22px, 4vw, 40px) !important;
+    color: var(--eso-login-text);
+    background: var(--eso-login-card) !important;
+    border: 1px solid color-mix(in srgb, var(--eso-login-border) 82%, transparent) !important;
+    border-radius: var(--eso-login-card-radius) !important;
+    box-shadow: 0 22px 65px rgba(19, 33, 61, .16) !important;
+    backdrop-filter: blur(10px);
+}
+
+body.welcome-anonymous.eso-login-custom .container-tight > .text-center {
+    margin-bottom: clamp(18px, 3vw, 30px);
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card {
+    overflow: hidden;
+    color: var(--eso-login-text) !important;
+    background: var(--eso-login-card) !important;
+    border: 1px solid var(--eso-login-border) !important;
+    border-radius: var(--eso-login-card-radius) !important;
+    box-shadow: 0 12px 34px rgba(19, 33, 61, .13) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .card-header,
+body.welcome-anonymous.eso-login-custom .main-content-card .card-body,
+body.welcome-anonymous.eso-login-custom .main-content-card .card-footer {
+    color: var(--eso-login-text) !important;
+    background: transparent !important;
+    border-color: var(--eso-login-border) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .card-header {
+    padding: clamp(22px, 3vw, 32px) clamp(22px, 4vw, 42px) 12px !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .card-body {
+    padding: clamp(22px, 4vw, 42px) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card form > .row {
+    align-items: flex-start;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card form > .row > .col-md-5 {
+    width: min(100%, var(--eso-login-panel-width)) !important;
+    max-width: var(--eso-login-panel-width) !important;
+    flex: 0 1 var(--eso-login-panel-width) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card h1,
+body.welcome-anonymous.eso-login-custom .main-content-card h2,
+body.welcome-anonymous.eso-login-custom .main-content-card h3,
+body.welcome-anonymous.eso-login-custom .main-content-card label {
+    color: var(--eso-login-text) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .eso-login-subtitle {
+    max-width: 620px;
+    margin: 8px auto 0;
+    color: var(--eso-login-muted) !important;
+    line-height: 1.5;
+    text-align: center;
+    text-wrap: balance;
+}
+
+body.welcome-anonymous.eso-login-custom.eso-login-has-logo .glpi-logo {
+    display: inline-block !important;
+    width: min(320px, 70vw) !important;
+    height: var(--eso-login-logo-height) !important;
+    margin-bottom: 0 !important;
+    background-image: var(--eso-login-logo-image) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .form-control,
+body.welcome-anonymous.eso-login-custom .main-content-card .form-select,
+body.welcome-anonymous.eso-login-custom .main-content-card .input-group-text {
+    min-height: 44px;
+    color: var(--eso-login-text) !important;
+    background-color: color-mix(in srgb, var(--eso-login-card) 92%, #FFFFFF) !important;
+    border-color: var(--eso-login-border) !important;
+    border-radius: 10px;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .form-control:focus,
+body.welcome-anonymous.eso-login-custom .main-content-card .form-select:focus {
+    border-color: var(--eso-login-primary) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--eso-login-primary) 20%, transparent) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .btn {
+    min-height: 44px;
+    border-radius: 10px !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .btn-primary {
+    color: #FFFFFF !important;
+    background: var(--eso-login-primary) !important;
+    border-color: var(--eso-login-primary) !important;
+    box-shadow: 0 7px 18px color-mix(in srgb, var(--eso-login-primary) 24%, transparent);
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card a,
+body.welcome-anonymous.eso-login-custom .page-anonymous > footer a {
+    color: var(--eso-login-primary);
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .text-muted,
+body.welcome-anonymous.eso-login-custom .container-tight > .text-center.text-muted,
+body.welcome-anonymous.eso-login-custom .page-anonymous > footer,
+body.welcome-anonymous.eso-login-custom .page-anonymous .copyright {
+    color: var(--eso-login-muted) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .main-content-card .card {
+    color: var(--eso-login-text);
+    background: color-mix(in srgb, var(--eso-login-card) 96%, transparent) !important;
+    border-color: var(--eso-login-border) !important;
+    border-radius: var(--eso-login-card-radius) !important;
+}
+
+/* Single Sign-On plugin used by the Entra ID login. */
+body.welcome-anonymous.eso-login-custom .singlesignon-auth-stack,
+body.welcome-anonymous.eso-login-custom .singlesignon-login,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-title,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-label,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-remember,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-remember-title {
+    color: var(--eso-login-text) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login {
+    width: 100% !important;
+    max-width: 100% !important;
+    background: color-mix(in srgb, var(--eso-login-card) 96%, transparent) !important;
+    border-color: var(--eso-login-border) !important;
+    border-radius: min(var(--eso-login-card-radius), 18px) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-button {
+    color: var(--eso-login-text) !important;
+    background: color-mix(in srgb, var(--eso-login-card) 96%, #FFFFFF) !important;
+    border-color: var(--eso-login-border) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-button:hover,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-button:focus {
+    color: var(--eso-login-primary) !important;
+    background: color-mix(in srgb, var(--eso-login-primary) 8%, var(--eso-login-card)) !important;
+    border-color: color-mix(in srgb, var(--eso-login-primary) 42%, var(--eso-login-border)) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-visual,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-arrow,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-remember-icon {
+    color: var(--eso-login-primary) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-visual,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-remember-icon {
+    background: color-mix(in srgb, var(--eso-login-primary) 13%, transparent) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-remember-inner {
+    color: var(--eso-login-text) !important;
+    background: color-mix(in srgb, var(--eso-login-primary) 7%, var(--eso-login-card)) !important;
+    border-color: color-mix(in srgb, var(--eso-login-primary) 28%, var(--eso-login-border)) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-remember-hint,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-classic .btn-link {
+    color: var(--eso-login-muted) !important;
+}
+
+body.welcome-anonymous.eso-login-custom .singlesignon-login-classic .btn-link:hover,
+body.welcome-anonymous.eso-login-custom .singlesignon-login-classic .btn-link:focus {
+    color: var(--eso-login-primary) !important;
+}
+
+body.welcome-anonymous .eso-login-config-only {
+    display: none !important;
+}
+
+body.welcome-anonymous.eso-login-custom .eso-login-footer-original {
+    display: none !important;
+}
+
+@media (max-width: 575.98px) {
+    body.welcome-anonymous.eso-login-custom .container-tight {
+        padding: 16px !important;
+        border-radius: min(var(--eso-login-card-radius), 14px) !important;
+    }
+
+    body.welcome-anonymous.eso-login-custom .main-content-card .card-header,
+    body.welcome-anonymous.eso-login-custom .main-content-card .card-body {
+        padding-inline: 18px !important;
+    }
+}
+
+/* GLPI 11 Helpdesk home */
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container .search-banner {
+    position: relative;
+    min-height: var(--eso-home-banner-height);
+    align-items: center;
+    overflow: hidden;
+    background-color: var(--eso-header-end) !important;
+    background-image: linear-gradient(var(--eso-home-overlay), var(--eso-home-overlay)), var(--eso-home-background-image) !important;
+    background-position: center, var(--eso-home-background-position) !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container .search-banner-content {
+    position: relative;
+    z-index: 1;
+    padding-top: clamp(44px, calc((var(--eso-home-banner-height) - 190px) / 2), 220px);
+    padding-bottom: clamp(44px, calc((var(--eso-home-banner-height) - 190px) / 2), 220px);
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container .search-banner .scene {
+    z-index: 1;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container [data-testid="home-title"] {
+    max-width: 900px;
+    margin-inline: auto;
+    color: var(--eso-home-title-color) !important;
+    font-size: clamp(24px, 4vw, var(--eso-home-title-size));
+    line-height: 1.08;
+    letter-spacing: -.025em;
+    text-wrap: balance;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, .24);
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container .eso-home-subtitle {
+    display: block;
+    max-width: 760px;
+    margin: 12px auto 0;
+    color: color-mix(in srgb, var(--eso-home-title-color) 88%, transparent) !important;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    text-align: center;
+    text-wrap: balance;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container .search-bar-container {
+    max-width: 760px;
+    margin-inline: auto;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom .helpdesk-home-container .home-search {
+    min-height: 52px;
+    border: 1px solid rgba(255, 255, 255, .52) !important;
+    border-radius: 14px !important;
+    background: rgba(255, 255, 255, .96) !important;
+    box-shadow: 0 14px 38px rgba(8, 20, 45, .18) !important;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom.eso-home-hide-scenes .helpdesk-home-container .search-banner .scene {
+    display: none !important;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom.eso-home-hide-scenes .helpdesk-home-container .search-banner-content {
+    max-width: 960px;
+}
+
+body.helpdesk.eso-theme-enabled.eso-home-custom.eso-home-has-logo header .navbar-brand .glpi-logo {
+    display: block;
+    width: min(220px, 28vw);
+    height: var(--eso-home-logo-height);
+    background-image: var(--eso-home-logo-image) !important;
+    background-position: left center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+/* Sidebar */
+body.eso-theme-enabled .sidebar.navbar-vertical {
+    background: linear-gradient(180deg, var(--eso-sidebar-start) 0%, var(--eso-sidebar-end) 100%) !important;
+    border-right: 0 !important;
+    box-shadow: 4px 0 18px rgba(16, 33, 63, .14);
+}
+
+body.eso-theme-enabled .sidebar .navbar-brand,
+body.eso-theme-enabled .sidebar .nav-link,
+body.eso-theme-enabled .sidebar .nav-link-title,
+body.eso-theme-enabled .sidebar .nav-link i,
+body.eso-theme-enabled .sidebar .nav-link svg,
+body.eso-theme-enabled .sidebar .nav-link-icon {
+    color: var(--eso-sidebar-text) !important;
+}
+
+body.eso-theme-enabled .sidebar .nav-link {
+    margin: 2px 8px;
+    border-radius: 9px !important;
+    transition: background .15s ease, transform .15s ease;
+}
+
+body.eso-theme-enabled .sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, .10) !important;
+    transform: translateX(2px);
+}
+
+body.eso-theme-enabled .sidebar .nav-link.active,
+body.eso-theme-enabled .sidebar .nav-item.active > .nav-link {
+    background: color-mix(in srgb, var(--eso-primary) 68%, transparent) !important;
+    color: #fff !important;
+}
+
+/* Header */
+body.eso-theme-enabled.eso-header-dark > header.navbar,
+body.eso-theme-enabled.eso-header-dark header.topbar {
+    background: linear-gradient(90deg, var(--eso-header-start), var(--eso-header-end)) !important;
+    border: 0 !important;
+    box-shadow: 0 3px 12px rgba(16, 33, 63, .16) !important;
+}
+
+body.eso-theme-enabled.eso-header-dark > header.navbar a,
+body.eso-theme-enabled.eso-header-dark > header.navbar .nav-link,
+body.eso-theme-enabled.eso-header-dark > header.navbar .navbar-brand,
+body.eso-theme-enabled.eso-header-dark > header.navbar .dropdown-toggle,
+body.eso-theme-enabled.eso-header-dark > header.navbar .text-muted,
+body.eso-theme-enabled.eso-header-dark > header.navbar .breadcrumb-item,
+body.eso-theme-enabled.eso-header-dark > header.navbar .breadcrumb-item a,
+body.eso-theme-enabled.eso-header-dark > header.navbar svg,
+body.eso-theme-enabled.eso-header-dark > header.navbar i,
+body.eso-theme-enabled.eso-header-dark header.topbar a,
+body.eso-theme-enabled.eso-header-dark header.topbar .nav-link,
+body.eso-theme-enabled.eso-header-dark header.topbar svg,
+body.eso-theme-enabled.eso-header-dark header.topbar i {
+    color: var(--eso-header-text) !important;
+}
+
+body.eso-theme-enabled.eso-header-dark > header.navbar .form-control,
+body.eso-theme-enabled.eso-header-dark header.topbar .form-control {
+    background: rgba(255, 255, 255, .98) !important;
+    color: var(--eso-text) !important;
+    border: 1px solid rgba(255, 255, 255, .35) !important;
+    border-radius: 10px !important;
+}
+
+/* Dropdowns must not inherit the light text used by a dark header. */
+body.eso-theme-enabled .dropdown-menu {
+    --tblr-dropdown-bg: var(--eso-menu-bg);
+    --tblr-dropdown-color: var(--eso-menu-text);
+    --tblr-dropdown-link-color: var(--eso-menu-text);
+    --tblr-dropdown-link-hover-color: var(--eso-menu-hover-text);
+    --tblr-dropdown-link-hover-bg: var(--eso-menu-hover-bg);
+    background: var(--eso-menu-bg) !important;
+    color: var(--eso-menu-text) !important;
+    border: 1px solid var(--eso-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 14px 38px rgba(16, 33, 63, .18) !important;
+}
+
+body.eso-theme-enabled .dropdown-menu .dropdown-header,
+body.eso-theme-enabled .dropdown-menu .dropdown-item,
+body.eso-theme-enabled .dropdown-menu .dropdown-item.dropdown-toggle,
+body.eso-theme-enabled .dropdown-menu .entity-dropdown-toggle,
+body.eso-theme-enabled .dropdown-menu .select2-selection,
+body.eso-theme-enabled .dropdown-menu .select2-selection__rendered,
+body.eso-theme-enabled .dropdown-menu .select2-selection__arrow,
+body.eso-theme-enabled .dropdown-menu .form-select {
+    color: var(--eso-menu-text) !important;
+}
+
+/* Higher specificity than the dark-header selectors above. */
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-header,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item.dropdown-toggle,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .entity-dropdown-toggle,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .select2-selection,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .select2-selection__rendered,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .select2-selection__arrow,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .form-select {
+    color: var(--eso-menu-text) !important;
+}
+
+body.eso-theme-enabled .dropdown-menu .dropdown-item > i,
+body.eso-theme-enabled .dropdown-menu .dropdown-item > svg,
+body.eso-theme-enabled .dropdown-menu .dropdown-item.dropdown-toggle::after {
+    color: currentColor !important;
+}
+
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item > i,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item > svg,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item.dropdown-toggle::after {
+    color: currentColor !important;
+}
+
+body.eso-theme-enabled .dropdown-menu .dropdown-item:hover,
+body.eso-theme-enabled .dropdown-menu .dropdown-item:focus,
+body.eso-theme-enabled .dropdown-menu .dropdown-item.show {
+    background: var(--eso-menu-hover-bg) !important;
+    color: var(--eso-menu-hover-text) !important;
+}
+
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item:hover,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item:focus,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .dropdown-item.show {
+    background: var(--eso-menu-hover-bg) !important;
+    color: var(--eso-menu-hover-text) !important;
+}
+
+body.eso-theme-enabled .dropdown-menu .dropdown-item.active {
+    background: color-mix(in srgb, var(--eso-primary) 14%, var(--eso-menu-bg)) !important;
+    color: var(--eso-primary) !important;
+}
+
+body.eso-theme-enabled .dropdown-menu .select2-selection {
+    background: var(--eso-menu-bg) !important;
+    border-color: var(--eso-border) !important;
+}
+
+body.eso-theme-enabled .dropdown-menu .btn-outline-secondary,
+body.eso-theme-enabled .dropdown-menu .btn-outline-secondary > i,
+body.eso-theme-enabled .dropdown-menu .btn-outline-secondary > svg {
+    color: var(--eso-menu-text) !important;
+}
+
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .btn-outline-secondary,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .btn-outline-secondary > i,
+body.eso-theme-enabled.eso-header-dark :is(header.navbar, header.topbar) .dropdown-menu .btn-outline-secondary > svg {
+    color: var(--eso-menu-text) !important;
+}
+
+body.eso-theme-enabled .select2-dropdown {
+    background: var(--eso-menu-bg) !important;
+    color: var(--eso-menu-text) !important;
+    border-color: var(--eso-border) !important;
+}
+
+body.eso-theme-enabled .select2-results__option--highlighted,
+body.eso-theme-enabled .select2-results__option[aria-selected="true"] {
+    background: var(--eso-menu-hover-bg) !important;
+    color: var(--eso-menu-hover-text) !important;
+}
+
+/* Secondary bar */
+body.eso-theme-enabled .secondary-bar {
+    background: var(--eso-card) !important;
+    border-bottom: 1px solid var(--eso-border);
+    box-shadow: 0 2px 7px rgba(20, 40, 80, .04) !important;
+}
+
+/* Cards and panels */
+body.eso-theme-enabled .card,
+body.eso-theme-enabled .grid-stack-item-content {
+    border: 1px solid var(--eso-border) !important;
+    border-radius: var(--eso-radius) !important;
+    box-shadow: 0 5px 20px rgba(23, 45, 85, var(--eso-shadow-alpha)) !important;
+}
+
+body.eso-theme-enabled .card {
+    background: var(--eso-card);
+}
+
+body.eso-theme-enabled.eso-card-hover .card,
+body.eso-theme-enabled.eso-card-hover .grid-stack-item-content {
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+body.eso-theme-enabled.eso-card-hover .grid-stack-item-content:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(23, 45, 85, calc(var(--eso-shadow-alpha) + .04)) !important;
+}
+
+/* Dashboard containers */
+body.eso-theme-enabled [id^="home-dashboard"] {
+    padding: 12px !important;
+}
+
+body.eso-theme-enabled [id^="home-dashboard"] .grid-stack-item-content {
+    overflow: hidden !important;
+    background: var(--eso-card) !important;
+}
+
+/* Big number widgets: neutral card, preserve the semantic foreground color. */
+body.eso-theme-enabled [id^="home-dashboard"] .dashboard-card,
+body.eso-theme-enabled [id^="home-dashboard"] .card.dashboard-card {
+    background-color: var(--eso-card) !important;
+}
+
+/* Do NOT add padding directly to .g-chart/.chart: ECharts calculates canvas size from this box. */
+body.eso-theme-enabled .g-chart .chart {
+    background: transparent !important;
+}
+
+/* Inputs */
+body.eso-theme-enabled .form-control,
+body.eso-theme-enabled .form-select,
+body.eso-theme-enabled .select2-selection {
+    border-radius: 9px !important;
+    border-color: var(--eso-border) !important;
+}
+
+body.eso-theme-enabled .form-control:focus,
+body.eso-theme-enabled .form-select:focus {
+    border-color: var(--eso-primary) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--eso-primary) 14%, transparent) !important;
+}
+
+/* Buttons */
+body.eso-theme-enabled .btn {
+    border-radius: 9px !important;
+}
+
+body.eso-theme-enabled .btn-primary,
+body.eso-theme-enabled .btn-primary > i,
+body.eso-theme-enabled .btn-primary > svg {
+    color: var(--eso-button-text) !important;
+}
+
+body.eso-theme-enabled .btn-primary {
+    background: var(--eso-button-bg) !important;
+    border-color: var(--eso-button-bg) !important;
+}
+
+body.eso-theme-enabled .btn-primary:hover,
+body.eso-theme-enabled .btn-primary:focus {
+    color: var(--eso-button-hover-text) !important;
+    background: var(--eso-button-hover-bg) !important;
+    border-color: var(--eso-button-hover-bg) !important;
+}
+
+body.eso-theme-enabled .btn-primary:hover > i,
+body.eso-theme-enabled .btn-primary:hover > svg,
+body.eso-theme-enabled .btn-primary:focus > i,
+body.eso-theme-enabled .btn-primary:focus > svg {
+    color: var(--eso-button-hover-text) !important;
+}
+
+/* Tables */
+body.eso-theme-enabled .table {
+    --tblr-table-border-color: var(--eso-border);
+}
+
+body.eso-theme-enabled .table > thead > tr > th {
+    color: var(--eso-muted);
+    font-weight: 600;
+}
+
+/* Tabs */
+body.eso-theme-enabled .nav-tabs {
+    border-bottom-color: var(--eso-border);
+}
+
+body.eso-theme-enabled .nav-tabs .nav-link.active {
+    color: var(--eso-primary) !important;
+    border-bottom-color: var(--eso-primary) !important;
+}
+
+/* Modals and alerts */
+body.eso-theme-enabled .modal-content {
+    border-radius: calc(var(--eso-radius) + 1px) !important;
+    border: 1px solid var(--eso-border) !important;
+    box-shadow: 0 20px 60px rgba(20, 40, 80, .20) !important;
+}
+
+body.eso-theme-enabled .alert {
+    border-radius: 11px !important;
+}
+
+/* Config page preview */
+#esocss-config-page .eso-preview-shell {
+    --p-primary: #3157D5;
+    --p-sidebar-a: #172D55;
+    --p-sidebar-b: #10213F;
+    --p-sidebar-text: #F8FAFC;
+    --p-header-a: #10213F;
+    --p-header-b: #172D55;
+    --p-header-text: #F8FAFC;
+    --p-bg: #F5F7FB;
+    --p-card: #FFFFFF;
+    --p-text: #17233C;
+    --p-border: #E3E8F0;
+    --p-menu-bg: #FFFFFF;
+    --p-menu-text: #374151;
+    --p-menu-hover-bg: #EEF3FF;
+    --p-menu-hover-text: #2547B5;
+    --p-button-bg: #3157D5;
+    --p-button-text: #FFFFFF;
+    --p-button-hover-bg: #2547B5;
+    --p-button-hover-text: #FFFFFF;
+    --p-radius: 14px;
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    overflow: hidden;
+    color: var(--p-text);
+    background: var(--p-bg);
+}
+
+#esocss-config-page .eso-preview-header {
+    padding: 12px 14px;
+    color: var(--p-header-text);
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--p-header-a), var(--p-header-b));
+}
+
+#esocss-config-page .eso-preview-sidebar {
+    width: 58px;
+    min-height: 210px;
+    padding: 16px 9px;
+    background: linear-gradient(180deg, var(--p-sidebar-a), var(--p-sidebar-b));
+}
+
+#esocss-config-page .eso-preview-sidebar span {
+    display: block;
+    height: 8px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--p-sidebar-text) 78%, transparent);
+}
+
+#esocss-config-page .eso-preview-content {
+    padding: 18px;
+}
+
+#esocss-config-page .eso-preview-menu {
+    overflow: hidden;
+    color: var(--p-menu-text);
+    background: var(--p-menu-bg);
+    border: 1px solid var(--p-border);
+    border-radius: calc(var(--p-radius) - 3px);
+    box-shadow: 0 8px 20px rgba(23,45,85,.09);
+}
+
+#esocss-config-page .eso-preview-menu strong,
+#esocss-config-page .eso-preview-menu span {
+    display: block;
+    padding: 8px 11px;
+}
+
+#esocss-config-page .eso-preview-menu strong {
+    border-bottom: 1px solid var(--p-border);
+}
+
+#esocss-config-page .eso-preview-menu .is-hovered {
+    color: var(--p-menu-hover-text);
+    background: var(--p-menu-hover-bg);
+}
+
+#esocss-config-page .eso-preview-card {
+    background: var(--p-card);
+    border: 1px solid var(--p-border);
+    border-radius: var(--p-radius);
+    padding: 16px;
+    box-shadow: 0 5px 18px rgba(23,45,85,.08);
+}
+
+#esocss-config-page .eso-preview-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--p-primary);
+}
+
+#esocss-config-page .eso-preview-primary-button {
+    width: 100%;
+    padding: 9px 12px;
+    color: var(--p-button-text);
+    font-weight: 650;
+    background: var(--p-button-bg);
+    border: 1px solid var(--p-button-bg);
+    border-radius: 9px;
+    transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+
+#esocss-config-page .eso-preview-primary-button:hover,
+#esocss-config-page .eso-preview-primary-button:focus {
+    color: var(--p-button-hover-text);
+    background: var(--p-button-hover-bg);
+    border-color: var(--p-button-hover-bg);
+}
+
+#esocss-config-page .eso-preview-chart {
+    height: 80px;
+    display: flex;
+    gap: 7px;
+    align-items: end;
+    padding: 10px;
+    border-radius: var(--p-radius);
+    background: var(--p-card);
+    border: 1px solid var(--p-border);
+}
+
+#esocss-config-page .eso-preview-chart i {
+    flex: 1;
+    border-radius: 5px 5px 2px 2px;
+}
+#esocss-config-page .eso-preview-chart i:nth-child(1) { background: var(--p-chart-1, #3157D5); }
+#esocss-config-page .eso-preview-chart i:nth-child(2) { background: var(--p-chart-2, #3B82F6); }
+#esocss-config-page .eso-preview-chart i:nth-child(3) { background: var(--p-chart-3, #38BDF8); }
+#esocss-config-page .eso-preview-chart i:nth-child(4) { background: var(--p-chart-4, #14B8A6); }
+
+#esocss-config-page .eso-brand-preview {
+    overflow: hidden;
+    color: #17233C;
+    background: #F5F7FB;
+    border: 1px solid var(--tblr-border-color, #E3E8F0);
+    border-radius: 14px;
+}
+
+#esocss-config-page .eso-brand-preview-header {
+    display: flex;
+    min-height: 58px;
+    padding: 9px 14px;
+    align-items: center;
+    gap: 9px;
+    color: #F8FAFC;
+    background: linear-gradient(90deg, #10213F, #172D55);
+}
+
+#esocss-config-page .eso-brand-preview-favicon-wrap {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .12);
+    border-radius: 6px;
+}
+
+#esocss-config-page .eso-brand-preview-favicon,
+#esocss-config-page .eso-brand-preview-header-logo,
+#esocss-config-page .eso-brand-preview-sidebar-logo,
+#esocss-config-page .eso-brand-preview-compact-logo {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+#esocss-config-page .eso-brand-preview-favicon {
+    width: 22px;
+    height: 22px;
+}
+
+#esocss-config-page .eso-brand-preview-header-logo-wrap {
+    display: inline-flex;
+    max-width: 180px;
+    min-height: 28px;
+    align-items: center;
+}
+
+#esocss-config-page .eso-brand-preview-header-logo {
+    max-width: 180px;
+}
+
+#esocss-config-page .eso-brand-preview-layout {
+    display: grid;
+    grid-template-columns: minmax(132px, 1.4fr) 64px minmax(150px, 2fr);
+    min-height: 190px;
+}
+
+#esocss-config-page .eso-brand-preview-sidebar-open,
+#esocss-config-page .eso-brand-preview-sidebar-compact {
+    display: flex;
+    padding: 15px 11px;
+    align-items: center;
+    flex-direction: column;
+    color: #F8FAFC;
+    background: linear-gradient(180deg, #172D55, #10213F);
+}
+
+#esocss-config-page .eso-brand-preview-sidebar-open {
+    border-right: 1px solid rgba(255, 255, 255, .1);
+}
+
+#esocss-config-page .eso-brand-preview-sidebar-logo {
+    width: min(150px, 100%);
+    margin-bottom: 20px;
+}
+
+#esocss-config-page .eso-brand-preview-sidebar-fallback,
+#esocss-config-page .eso-brand-preview-compact-fallback {
+    display: inline-flex;
+    min-height: 36px;
+    margin-bottom: 20px;
+    align-items: center;
+    font-weight: 800;
+    letter-spacing: .06em;
+}
+
+#esocss-config-page .eso-brand-preview-sidebar-open span,
+#esocss-config-page .eso-brand-preview-sidebar-compact i {
+    display: block;
+    width: 100%;
+    height: 8px;
+    margin-bottom: 12px;
+    background: rgba(255, 255, 255, .3);
+    border-radius: 5px;
+}
+
+#esocss-config-page .eso-brand-preview-compact-logo {
+    margin-bottom: 20px;
+}
+
+#esocss-config-page .eso-brand-preview-sidebar-compact i {
+    width: 24px;
+    height: 24px;
+}
+
+#esocss-config-page .eso-brand-preview-content {
+    display: flex;
+    padding: 22px;
+    justify-content: center;
+    flex-direction: column;
+    gap: 7px;
+}
+
+#esocss-config-page .eso-brand-preview-content small {
+    color: #66758C;
+}
+
+#esocss-config-page .eso-home-preview {
+    min-height: 225px;
+    overflow: hidden;
+    color: #FFFFFF;
+    background-color: #172D55;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid var(--tblr-border-color, #E3E8F0);
+    border-radius: 14px;
+}
+
+#esocss-config-page .eso-home-preview-overlay {
+    display: flex;
+    min-height: inherit;
+    padding: 20px 24px 26px;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgba(16, 33, 63, .38);
+}
+
+#esocss-config-page .eso-home-preview-logo-wrap {
+    min-height: 42px;
+}
+
+#esocss-config-page .eso-home-preview-logo {
+    display: block;
+    max-width: 210px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+#esocss-config-page .eso-home-preview-logo-fallback {
+    font-weight: 800;
+    letter-spacing: .05em;
+}
+
+#esocss-config-page .eso-home-preview-copy {
+    text-align: center;
+}
+
+#esocss-config-page .eso-home-preview-title,
+#esocss-config-page .eso-home-preview-subtitle {
+    display: block;
+    text-wrap: balance;
+}
+
+#esocss-config-page .eso-home-preview-title {
+    font-size: 26px;
+    line-height: 1.1;
+}
+
+#esocss-config-page .eso-home-preview-subtitle {
+    margin-top: 7px;
+    color: rgba(255, 255, 255, .86);
+}
+
+#esocss-config-page .eso-home-preview-search {
+    max-width: 480px;
+    margin: 16px auto 0;
+    padding: 10px 14px;
+    color: #66758C;
+    text-align: left;
+    background: rgba(255, 255, 255, .96);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .16);
+}
+
+#esocss-config-page .eso-login-preview {
+    min-height: 610px;
+    padding: 26px;
+    background-color: #F3F4F6;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid var(--tblr-border-color, #E3E8F0);
+    border-radius: 14px;
+}
+
+#esocss-config-page .eso-login-preview-overlay {
+    display: flex;
+    min-height: 558px;
+    padding: 22px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+#esocss-config-page .eso-login-preview-shell {
+    width: min(100%, 660px);
+    padding: 24px;
+    background: rgba(255, 255, 255, .98);
+    border: 1px solid #DDE3EC;
+    border-radius: 16px;
+    box-shadow: 0 17px 44px rgba(19, 33, 61, .14);
+}
+
+#esocss-config-page .eso-login-preview-brand {
+    min-height: 62px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#esocss-config-page .eso-login-preview-logo {
+    display: inline-block;
+    max-width: min(280px, 70%);
+    object-fit: contain;
+}
+
+#esocss-config-page .eso-login-preview-logo-fallback {
+    display: inline-flex;
+    height: 60px;
+    align-items: center;
+    color: var(--lp-primary, #3157D5);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+}
+
+#esocss-config-page .eso-login-preview-card {
+    padding: 24px;
+    color: #1F2937;
+    text-align: center;
+    background: rgba(255, 255, 255, .98);
+    border: 1px solid #DDE3EC;
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(19, 33, 61, .11);
+}
+
+#esocss-config-page .eso-login-preview-title {
+    display: block;
+    font-size: 1.15rem;
+}
+
+#esocss-config-page .eso-login-preview-subtitle {
+    display: block;
+    margin: 5px auto 17px;
+    color: var(--lp-muted, #667085);
+    font-size: .82rem;
+}
+
+#esocss-config-page .eso-login-preview-welcome {
+    display: block;
+    margin: -7px auto 16px;
+    color: var(--lp-muted, #667085);
+    font-size: .8rem;
+}
+
+#esocss-config-page .eso-login-preview-panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    text-align: left;
+}
+
+#esocss-config-page .eso-login-preview-panel {
+    padding: 14px;
+    border: 1px solid var(--lp-border, #DDE3EC);
+    border-radius: 10px;
+}
+
+#esocss-config-page .eso-login-preview-sso,
+#esocss-config-page .eso-login-preview-remember {
+    display: flex;
+    max-width: 100%;
+    margin-inline: auto;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    border: 1px solid var(--lp-border, #DDE3EC);
+    border-radius: 10px;
+}
+
+#esocss-config-page .eso-login-preview-sso {
+    min-height: 46px;
+    padding: 10px 14px;
+    font-weight: 650;
+    color: var(--lp-primary, #3157D5);
+}
+
+#esocss-config-page .eso-login-preview-sso i:last-child {
+    margin-left: auto;
+}
+
+#esocss-config-page .eso-login-preview-remember {
+    margin-top: 12px;
+    padding: 10px 14px;
+    color: var(--lp-muted, #667085);
+    background: color-mix(in srgb, var(--lp-primary, #3157D5) 8%, #FFFFFF);
+    border-color: color-mix(in srgb, var(--lp-primary, #3157D5) 28%, var(--lp-border, #DDE3EC));
+}
+
+#esocss-config-page .eso-login-preview-form-toggle {
+    display: block;
+    margin-top: 14px;
+    color: var(--lp-primary, #3157D5);
+    font-size: .75rem;
+    text-align: center;
+}
+
+#esocss-config-page .eso-login-preview-native label,
+#esocss-config-page .eso-login-preview-source-label {
+    display: block;
+    margin: 0 0 4px;
+    color: var(--lp-muted, #667085);
+    font-size: .72rem;
+    font-weight: 650;
+}
+
+#esocss-config-page .eso-login-preview-input {
+    min-height: 34px;
+    margin-bottom: 9px;
+    padding: 8px 10px;
+    overflow: hidden;
+    color: var(--lp-muted, #667085);
+    font-size: .72rem;
+    white-space: nowrap;
+    border: 1px solid var(--lp-border, #DDE3EC);
+    border-radius: 8px;
+}
+
+#esocss-config-page .eso-login-preview-submit {
+    margin-top: 10px;
+    padding: 9px 12px;
+    color: #FFFFFF;
+    font-size: .76rem;
+    font-weight: 700;
+    text-align: center;
+    background: var(--lp-primary, #3157D5);
+    border-radius: 8px;
+}
+
+#esocss-config-page .eso-login-preview-links {
+    display: flex;
+    margin-top: 9px;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--lp-primary, #3157D5);
+    font-size: .68rem;
+}
+
+#esocss-config-page .eso-login-preview-footer {
+    margin-top: 13px;
+    color: var(--lp-muted, #667085);
+    font-size: .72rem;
+    text-align: center;
+}
+
+@media (max-width: 767.98px) {
+    #esocss-config-page .eso-login-preview-panels {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #esocss-config-page .eso-brand-preview-layout {
+        grid-template-columns: minmax(110px, 1.4fr) 54px;
+    }
+
+    #esocss-config-page .eso-brand-preview-content {
+        display: none;
+    }
+
+    #esocss-config-page .eso-login-preview,
+    #esocss-config-page .eso-login-preview-overlay,
+    #esocss-config-page .eso-login-preview-shell,
+    #esocss-config-page .eso-login-preview-card {
+        padding: 14px;
+    }
+}

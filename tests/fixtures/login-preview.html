@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESO CSS - Login fixture</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; font: 15px/1.45 system-ui, sans-serif; }
+        .text-center { text-align: center; }
+        .card { display: block; }
+        .row { display: flex; flex-wrap: wrap; gap: 20px; }
+        .col-md-5 { width: 100%; max-width: 470px; margin-inline: auto; }
+        .col-auto { width: 100%; max-width: 320px; margin-inline: auto; }
+        .card-header:empty { display: none; }
+        .form-label { display: block; margin: 0 0 7px; font-weight: 650; }
+        .form-control { display: block; width: 100%; padding: 10px 12px; }
+        .mb-3 { margin-bottom: 16px; }
+        .mb-4 { margin-bottom: 24px; }
+        .btn { display: inline-flex; width: 100%; padding: 10px 14px; align-items: center; justify-content: center; }
+        .form-check { display: flex; margin: 12px 0; align-items: center; gap: 7px; }
+        .forgot_password, .faq { margin-top: 10px; text-align: center; }
+        .glpi-logo { display: inline-flex; width: 230px; height: 70px; align-items: center; justify-content: center; color: #3157d5; font-size: 25px; font-weight: 800; letter-spacing: .08em; }
+        footer { padding: 18px; text-align: center; }
+    </style>
+    <link rel="stylesheet" href="../../public/css/eso-modern.css">
+</head>
+<body class="welcome-anonymous">
+    <main id="page" class="page-anonymous">
+        <div class="flex-fill">
+            <div class="container-tight">
+                <div class="text-center"><span class="glpi-logo">SUA MARCA</span></div>
+                <div class="card card-md main-content-card">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="card-header mb-4 text-center"><h2>Login</h2></div>
+                                    <div class="rich_text_container text-center">Texto original de boas-vindas</div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="login_name">Login</label>
+                                        <input class="form-control" id="login_name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="login_password">Password</label>
+                                        <input class="form-control" id="login_password" type="password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="dropdown_auth_test">Login source</label>
+                                        <select class="form-control" id="dropdown_auth_test"><option>Local</option></select>
+                                    </div>
+                                    <label class="form-check" for="login_remember">
+                                        <input id="login_remember" type="checkbox"><span class="form-check-label">Remember me</span>
+                                    </label>
+                                    <button class="btn btn-primary" name="submit" type="button">Sign in</button>
+                                    <div class="forgot_password"><a href="#forgot">Forgotten password?</a></div>
+                                </div>
+                                <div class="col-auto">
+                                    <a class="btn" href="#sso"><i>🔒</i><span>Login with Microsoft</span></a>
+                                    <label class="form-check remember-sso"><input type="checkbox"><span>Remember this browser</span></label>
+                                    <a href="#form">Use GLPI login form</a>
+                                    <script type="application/json" id="esocss-login-config">{"enabled":true,"title":"Logon Único","subtitle":"Acesse com sua conta institucional","texts":{"welcome":"Bem-vindo à Central de Serviços","sso_button":"Acessar com conta institucional","remember":"Continuar conectado","form_toggle":"Entrar com usuário e senha","user_label":"E-mail institucional","user_placeholder":"nome@empresa.exemplo","password_label":"Senha","password_placeholder":"Digite sua senha","source_label":"Origem do acesso","submit":"Acessar","forgot_password":"Recuperar minha senha","faq":"Central de ajuda","footer":"Central de Serviços"},"background_url":"","logo_url":"","background_position":"center","background_color":"#F3F4F6","card_color":"#FFFFFF","text_color":"#1F2937","muted_color":"#667085","primary_color":"#3157D5","border_color":"#DDE3EC","overlay_color":"#FFFFFF","overlay_opacity":12,"card_opacity":98,"card_width":920,"card_radius":16,"logo_max_height":78}</script>
+                                </div>
+                            </div>
+                            <div class="faq"><a class="btn" href="/front/helpdesk.faq.php"><i>?</i> FAQ</a></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center text-muted mt-3">GLPI Copyright (C) 2015-2026 Teclib' and contributors</div>
+            </div>
+        </div>
+    </main>
+    <script src="../../public/js/eso-theme.js"></script>
+</body>
+</html>

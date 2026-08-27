@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESO CSS - Dropdown fixture</title>
+    <link rel="stylesheet" href="../../public/css/eso-modern.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font: 15px/1.4 system-ui, sans-serif; }
+        header.navbar { min-height: 72px; padding: 12px 24px; color: white; }
+        header.navbar .dropdown-menu { display: block; position: absolute; top: 58px; right: 24px; width: 330px; padding: 8px; }
+        .dropdown-header { display: block; padding: 8px 12px; font-weight: 700; }
+        .dropdown-item { display: flex; width: 100%; padding: 10px 12px; gap: 8px; border: 0; text-decoration: none; background: transparent; }
+        .select2-selection { display: block; margin: 8px 12px; padding: 9px; }
+        main { min-height: 420px; padding: 48px 24px; background: var(--eso-bg); }
+    </style>
+</head>
+<body class="eso-theme-enabled eso-header-dark">
+    <header class="navbar">
+        <strong>ESO CSS / GLPI</strong>
+        <div class="dropdown-menu show">
+            <span class="dropdown-header">Everton Silva de Oliveira</span>
+            <button class="dropdown-item dropdown-toggle" type="button">👤 Abertura de Chamado</button>
+            <a class="dropdown-item entity-dropdown-toggle" href="#">▦ Entidade raiz</a>
+            <a class="dropdown-item is-test-hover" href="#">⚙ Configurações</a>
+            <span class="select2-selection"><span class="select2-selection__rendered">Português do Brasil</span></span>
+        </div>
+    </header>
+    <main>
+        <h1>Validação do menu</h1>
+        <p>O texto do cabeçalho continua claro e o conteúdo do menu permanece escuro sobre fundo claro.</p>
+    </main>
+</body>
+</html>

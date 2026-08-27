@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-BR" style="--eso-brand-sidebar-image:url('./brand-wide.svg');--eso-brand-sidebar-compact-image:url('./brand-square.svg');--eso-brand-header-image:url('./brand-wide.svg');--eso-brand-sidebar-height:44px;--eso-brand-sidebar-compact-size:40px;--eso-brand-header-height:36px">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teste de identidade global — ESO CSS</title>
+    <link rel="stylesheet" href="../../public/css/eso-modern.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; color: #17233c; background: #f5f7fb; font: 15px/1.45 Arial, sans-serif; }
+        .navbar-brand { display: flex; min-height: 58px; align-items: center; justify-content: center; }
+        .glpi-logo { display: block; width: 160px; height: 40px; background: #ddd; }
+        header { position: fixed; inset: 0 0 auto 260px; z-index: 2; display: flex; height: 70px; padding: 6px 22px; align-items: center; color: #fff; background: #10213f; }
+        header .navbar-brand { justify-content: flex-start; }
+        header button { margin-left: auto; padding: 9px 14px; color: #17233c; background: #fff; border: 0; border-radius: 8px; cursor: pointer; }
+        .sidebar { position: fixed; inset: 0 auto 0 0; width: 260px; padding: 8px 12px; background: linear-gradient(#172d55, #10213f); transition: width .2s; }
+        .sidebar nav { display: grid; gap: 8px; margin-top: 20px; }
+        .sidebar nav span { display: block; padding: 11px; color: #f8fafc; background: rgba(255,255,255,.08); border-radius: 8px; }
+        main { min-height: 100vh; margin-left: 260px; padding: 110px 38px 38px; transition: margin-left .2s; }
+        .card { max-width: 760px; padding: 28px; background: #fff; border: 1px solid #e3e8f0; border-radius: 14px; box-shadow: 0 12px 30px rgba(23,45,85,.1); }
+        body.navbar-collapsed .sidebar { width: 76px; padding-inline: 8px; }
+        body.navbar-collapsed .sidebar nav span { height: 42px; padding: 0; overflow: hidden; color: transparent; }
+        body.navbar-collapsed header { left: 76px; }
+        body.navbar-collapsed main { margin-left: 76px; }
+        @media (max-width: 680px) { header { left: 76px; } .sidebar { width: 76px; } main { margin-left: 76px; padding-inline: 18px; } .sidebar nav span { height: 42px; color: transparent; } }
+    </style>
+</head>
+<body class="vertical-layout eso-brand-sidebar eso-brand-sidebar-compact eso-brand-header">
+    <aside class="navbar navbar-vertical sidebar" data-testid="sidebar">
+        <a class="navbar-brand" href="#"><span class="glpi-logo"></span></a>
+        <nav><span>Início</span><span>Chamados</span><span>Ativos</span><span>Administração</span></nav>
+    </aside>
+    <header class="navbar topbar" data-testid="main-header">
+        <a class="navbar-brand" href="#"><span class="glpi-logo"></span></a>
+        <button type="button" onclick="document.body.classList.toggle('navbar-collapsed')">Alternar menu</button>
+    </header>
+    <main>
+        <section class="card">
+            <h1>Identidade global</h1>
+            <p>Esta página verifica a logo lateral aberta, a versão compacta e a logo do cabeçalho usando a estrutura oficial de navegação do GLPI 11.</p>
+            <p><strong>Teste:</strong> clique em “Alternar menu” para conferir a versão quadrada.</p>
+        </section>
+    </main>
+</body>
+</html>

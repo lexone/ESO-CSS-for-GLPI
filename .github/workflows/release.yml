@@ -1,0 +1,81 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - 'release/v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Validate tag and plugin version
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            release_tag="${GITHUB_REF_NAME}"
+          else
+            release_tag="${GITHUB_REF_NAME#release/}"
+          fi
+          release_version="${release_tag#v}"
+          plugin_version="$(php -r "include 'setup.php'; echo PLUGIN_ESOCSS_VERSION;")"
+          if [[ "${release_version}" != "${plugin_version}" ]]; then
+            echo "Tag ${release_version} differs from plugin ${plugin_version}." >&2
+            exit 1
+          fi
+          echo "tag=${release_tag}" >> "${GITHUB_OUTPUT}"
+          echo "version=${release_version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Build verified package
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_version="${{ steps.release.outputs.version }}"
+          mkdir -p build/esocss dist
+          rsync -a ./ build/esocss/ \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude 'build/' \
+            --exclude 'tests/' \
+            --exclude 'dist/'
+          (
+            cd build
+            zip -qr "../dist/esocss-${release_version}.zip" esocss
+          )
+          (
+            cd dist
+            sha256sum "esocss-${release_version}.zip" > "esocss-${release_version}.zip.sha256"
+          )
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_tag="${{ steps.release.outputs.tag }}"
+          target_args=()
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            target_args+=(--verify-tag)
+          else
+            target_args+=(--target "${GITHUB_SHA}")
+          fi
+          gh release create "${release_tag}" \
+            dist/esocss-*.zip \
+            dist/esocss-*.zip.sha256 \
+            "${target_args[@]}" \
+            --generate-notes \
+            --title "ESO CSS for GLPI ${{ steps.release.outputs.version }}"

@@ -1,0 +1,14 @@
+{
+  "name": "everton-silva/eso-css-for-glpi",
+  "description": "ESO CSS for GLPI: tema configurável para GLPI 11 com login, Helpdesk e ECharts personalizados.",
+  "type": "glpi-plugin",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Everton Silva de Oliveira"
+    }
+  ],
+  "require": {
+    "php": ">=8.2"
+  }
+}
