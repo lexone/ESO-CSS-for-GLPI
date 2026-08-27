@@ -18,6 +18,8 @@ final class Settings
             'home_enabled'         => '0',
             'home_hide_scenes'     => '0',
             'login_enabled'        => '0',
+            'login_image_mode'     => 'panel',
+            'login_layout'         => 'center',
 
             'primary_color'        => '#3157D5',
             'primary_hover'        => '#2547B5',
@@ -62,6 +64,7 @@ final class Settings
             'login_card_opacity'    => '98',
             'login_card_width'      => '920',
             'login_panel_width'     => '720',
+            'login_media_width'     => '65',
             'login_card_radius'     => '16',
             'login_logo_max_height' => '78',
             'brand_sidebar_logo_height' => '44',
@@ -122,6 +125,12 @@ final class Settings
         }
         if (!array_key_exists('button_hover_background', $saved)) {
             $values['button_hover_background'] = $values['primary_hover'];
+        }
+
+        // Keep the full-background presentation for installations upgraded
+        // from versions that did not yet offer a separate image panel.
+        if ($saved !== [] && !array_key_exists('login_image_mode', $saved)) {
+            $values['login_image_mode'] = 'background';
         }
 
         return $values;
@@ -211,6 +220,12 @@ final class Settings
             1000,
             720
         );
+        $out['login_media_width'] = (string) self::clampInt(
+            $input['login_media_width'] ?? 65,
+            45,
+            75,
+            65
+        );
         $out['login_card_radius'] = (string) self::clampInt(
             $input['login_card_radius'] ?? 16,
             0,
@@ -264,6 +279,14 @@ final class Settings
         $loginPosition = strtolower(trim((string) ($input['login_background_position'] ?? 'center')));
         $out['login_background_position'] = in_array($loginPosition, $positions, true)
             ? $loginPosition
+            : 'center';
+        $imageMode = strtolower(trim((string) ($input['login_image_mode'] ?? 'panel')));
+        $out['login_image_mode'] = in_array($imageMode, ['panel', 'background'], true)
+            ? $imageMode
+            : 'panel';
+        $loginLayout = strtolower(trim((string) ($input['login_layout'] ?? 'center')));
+        $out['login_layout'] = in_array($loginLayout, ['center', 'left', 'right'], true)
+            ? $loginLayout
             : 'center';
 
         $customCss = (string) ($input['custom_css'] ?? '');
@@ -370,6 +393,8 @@ final class Settings
             'background_url'      => MediaManager::publicUrl($c['login_background_image']),
             'logo_url'            => MediaManager::publicUrl($c['login_logo_image']),
             'favicon_url'         => MediaManager::publicUrl($c['brand_favicon_image']),
+            'image_mode'          => $c['login_image_mode'],
+            'layout'              => $c['login_layout'],
             'background_position' => $c['login_background_position'],
             'background_color'    => $c['login_background_color'],
             'card_color'          => $c['login_card_color'],
@@ -382,6 +407,7 @@ final class Settings
             'card_opacity'        => (int) $c['login_card_opacity'],
             'card_width'          => (int) $c['login_card_width'],
             'panel_width'         => (int) $c['login_panel_width'],
+            'media_width'         => (int) $c['login_media_width'],
             'card_radius'         => (int) $c['login_card_radius'],
             'logo_max_height'     => (int) $c['login_logo_max_height'],
         ];

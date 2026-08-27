@@ -120,7 +120,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             <h1 class="h2 mb-1"><i class="ti ti-palette me-2"></i>ESO CSS for GLPI</h1>
             <p class="text-muted mb-0">Personalize cores, cards e gráficos ECharts do GLPI 11 sem editar o core.</p>
         </div>
-        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.7.3') ?></span>
+        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.8.0') ?></span>
     </div>
 
     <form method="post" action="<?= htmlspecialchars($settingsFormUrl, ENT_QUOTES, 'UTF-8') ?>" autocomplete="off" enctype="multipart/form-data">
@@ -449,6 +449,32 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                             ?>
                         </div>
 
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold" for="login_image_mode">Uso da imagem</label>
+                                <select class="form-select" id="login_image_mode" name="login_image_mode">
+                                    <option value="panel" <?= $config['login_image_mode'] === 'panel' ? 'selected' : '' ?>>Painel separado (sem fundo)</option>
+                                    <option value="background" <?= $config['login_image_mode'] === 'background' ? 'selected' : '' ?>>Fundo da página (legado)</option>
+                                </select>
+                                <div class="form-hint">No painel separado, a imagem ocupa uma área própria e não fica atrás do formulário.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold" for="login_layout">Posição do login</label>
+                                <select class="form-select" id="login_layout" name="login_layout">
+                                    <option value="center" <?= $config['login_layout'] === 'center' ? 'selected' : '' ?>>Centralizado</option>
+                                    <option value="left" <?= $config['login_layout'] === 'left' ? 'selected' : '' ?>>À esquerda</option>
+                                    <option value="right" <?= $config['login_layout'] === 'right' ? 'selected' : '' ?>>À direita (estilo ST Login)</option>
+                                </select>
+                                <div class="form-hint">No modo central, o formulário fica no centro e o painel de imagem é ocultado.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold" for="login_media_width">Largura da imagem (%)</label>
+                                <input class="form-control" type="number" min="45" max="75" id="login_media_width"
+                                       name="login_media_width" value="<?= (int) $config['login_media_width'] ?>">
+                                <div class="form-hint">Usado nas posições esquerda e direita. Recomendado: 65%.</div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <?php
                             esocss_color_field('login_background_color', 'Fundo da página', $config['login_background_color']);
@@ -493,7 +519,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                                        name="login_logo_max_height" value="<?= (int) $config['login_logo_max_height'] ?>">
                             </div>
                             <div class="col-md-8 col-xl-2">
-                                <label class="form-label fw-semibold" for="login_background_position">Posição</label>
+                                <label class="form-label fw-semibold" for="login_background_position">Enquadramento da imagem</label>
                                 <select class="form-select" id="login_background_position" name="login_background_position">
                                     <?php foreach ($positions as $value => $label): ?>
                                         <option value="<?= $value ?>" <?= $config['login_background_position'] === $value ? 'selected' : '' ?>>
@@ -506,10 +532,10 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
 
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold" for="login_background_file">Imagem de fundo do login</label>
+                                <label class="form-label fw-semibold" for="login_background_file">Imagem do painel lateral / fundo legado</label>
                                 <input class="form-control" type="file" id="login_background_file" name="login_background_file"
                                        accept="image/jpeg,image/png,image/webp">
-                                <div class="form-hint">JPG, PNG ou WebP, até 5 MB. Recomendado: 1920 × 1080 px.</div>
+                                <div class="form-hint">JPG, PNG ou WebP, até 5 MB. No modo separado, ela aparece ao lado do login.</div>
                                 <?php if ($loginBackgroundUrl !== ''): ?>
                                     <label class="form-check mt-2">
                                         <input class="form-check-input" type="checkbox" id="remove_login_background"
@@ -535,9 +561,11 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
 
                         <div id="eso-login-preview" class="eso-login-preview"
                              data-background-url="<?= htmlspecialchars($loginBackgroundUrl, ENT_QUOTES, 'UTF-8') ?>"
-                             data-logo-url="<?= htmlspecialchars($loginLogoUrl, ENT_QUOTES, 'UTF-8') ?>">
+                            data-logo-url="<?= htmlspecialchars($loginLogoUrl, ENT_QUOTES, 'UTF-8') ?>">
                             <div class="eso-login-preview-overlay">
-                                <div class="eso-login-preview-shell">
+                                <div class="eso-login-preview-media" aria-hidden="true"></div>
+                                <div class="eso-login-preview-content">
+                                    <div class="eso-login-preview-shell">
                                     <div class="eso-login-preview-brand">
                                         <img class="eso-login-preview-logo <?= $loginLogoUrl === '' ? 'd-none' : '' ?>"
                                              src="<?= htmlspecialchars($loginLogoUrl, ENT_QUOTES, 'UTF-8') ?>" alt="Prévia do logotipo do login">
@@ -575,7 +603,8 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="eso-login-preview-footer">GLPI Copyright (C) 2015-2026</div>
+                                        <div class="eso-login-preview-footer">GLPI Copyright (C) 2015-2026</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -857,14 +886,38 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         const backgroundUrl = removeBackground
             ? ''
             : (preview.dataset.selectedBackgroundUrl || preview.dataset.backgroundUrl || '');
+        const imageMode = $('#login_image_mode')?.value === 'background' ? 'background' : 'panel';
+        const layoutValue = $('#login_layout')?.value || 'center';
+        const layout = ['center', 'left', 'right'].includes(layoutValue) ? layoutValue : 'center';
+        const mediaWidth = Math.max(45, Math.min(75, Number($('#login_media_width')?.value || 65)));
+        const imagePosition = $('#login_background_position')?.value || 'center';
+        const overlayOpacity = Math.max(0, Math.min(90, Number($('#login_overlay_opacity')?.value || 12))) / 100;
+        const overlayColor = hexToRgba($('#login_overlay_color')?.value || '#FFFFFF', overlayOpacity);
+
+        preview.classList.remove(
+            'eso-login-preview-image-panel',
+            'eso-login-preview-image-background',
+            'eso-login-preview-align-center',
+            'eso-login-preview-align-left',
+            'eso-login-preview-align-right'
+        );
+        preview.classList.add(`eso-login-preview-image-${imageMode}`, `eso-login-preview-align-${layout}`);
+        preview.style.setProperty('--lp-media-width', mediaWidth + '%');
         preview.style.backgroundColor = $('#login_background_color')?.value || '#F3F4F6';
-        preview.style.backgroundImage = backgroundUrl ? `url("${backgroundUrl}")` : 'none';
-        preview.style.backgroundPosition = $('#login_background_position')?.value || 'center';
+        preview.style.backgroundImage = imageMode === 'background' && backgroundUrl ? `url("${backgroundUrl}")` : 'none';
+        preview.style.backgroundPosition = imagePosition;
 
         const overlay = preview.querySelector('.eso-login-preview-overlay');
-        const overlayOpacity = Math.max(0, Math.min(90, Number($('#login_overlay_opacity')?.value || 12))) / 100;
         if (overlay) {
-            overlay.style.backgroundColor = hexToRgba($('#login_overlay_color')?.value || '#FFFFFF', overlayOpacity);
+            overlay.style.backgroundColor = imageMode === 'background' ? overlayColor : 'transparent';
+        }
+        const media = preview.querySelector('.eso-login-preview-media');
+        if (media) {
+            media.style.backgroundColor = $('#login_background_color')?.value || '#F3F4F6';
+            media.style.backgroundImage = imageMode === 'panel' && backgroundUrl
+                ? `linear-gradient(${overlayColor}, ${overlayColor}), url("${backgroundUrl}")`
+                : 'none';
+            media.style.backgroundPosition = imagePosition;
         }
 
         const cardColor = $('#login_card_color')?.value || '#FFFFFF';
@@ -1065,7 +1118,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
     all('input[type="number"]').forEach(input => input.addEventListener('input', syncPreview));
     all('#home_title, #home_subtitle, #home_background_position, #remove_home_background, #remove_home_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
-    all('#login_title, #login_subtitle, #login_background_position, #remove_login_background, #remove_login_logo')
+    all('#login_title, #login_subtitle, #login_image_mode, #login_layout, #login_background_position, #remove_login_background, #remove_login_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
     all('#remove_brand_sidebar_logo, #remove_brand_sidebar_compact_logo, #remove_brand_header_logo, #remove_brand_favicon')
         .forEach(input => input.addEventListener('input', syncPreview));

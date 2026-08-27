@@ -4,7 +4,7 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 
 **Autor:** Everton Silva de Oliveira<br>
 **Identificador técnico do plugin:** `esocss`<br>
-**Versão:** 1.7.3<br>
+**Versão:** 1.8.0<br>
 **Compatibilidade:** GLPI 11.0.0 até 11.0.99
 
 ## Recursos
@@ -24,7 +24,7 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 - Temas rápidos ESO Azul, Oceano e Grafite.
 - Verificação de versão e atualização automática pela interface administrativa.
 - Personalização da página inicial Helpdesk com fundo, logotipo, título, subtítulo e prévia.
-- Personalização da tela de login com fundo, logotipo, cartão externo, painel interno, textos, cores e prévia responsiva.
+- Personalização da tela de login com imagem em painel separado ou fundo legado, posição central/esquerda/direita, logotipo, textos, cores e prévia responsiva.
 - Compatibilidade visual com login único/Entra ID sem alterar o fluxo de autenticação.
 - Textos personalizáveis para SSO, formulário nativo, permanência, recuperação, FAQ e rodapé.
 - Logotipos globais configuráveis para menu lateral aberto, menu recolhido e cabeçalho/Helpdesk.
@@ -189,7 +189,8 @@ A página permite configurar:
 - Cor e intensidade da sobreposição, posição da imagem, altura do banner e tamanho do título.
 - Exibição ou ocultação das ilustrações laterais nativas do GLPI.
 - Ativação da tela de login personalizada.
-- Título, subtítulo, imagem de fundo e logotipo do login.
+- Título, subtítulo, imagem lateral ou de fundo e logotipo do login.
+- Login centralizado, à esquerda ou à direita, com largura configurável para o painel de imagem.
 - Cores de fundo, cartão, textos, botões, links e bordas da tela de login.
 - Sobreposição da imagem, transparência, largura externa, largura do painel interno, cantos e altura do logotipo do login.
 - Textos do botão Entra ID/SSO, “Lembrar de mim” e link para alternar ao formulário GLPI.
@@ -241,7 +242,9 @@ As ilustrações esquerda e direita continuam sendo configuradas pelo recurso na
 
 ## Tela de login e login único
 
-Na seção **Tela de login** é possível reproduzir um visual institucional como o da referência: fundo da página, logotipo, cartão central, título, subtítulo, cores, transparência, largura externa, largura do painel interno e cantos. O plugin reconhece a estrutura `.singlesignon-*` usada pelo login único/Entra ID.
+Na seção **Tela de login** é possível usar a imagem em um painel separado, sem colocá-la atrás do formulário. O login pode ficar centralizado, à esquerda ou à direita; nesta última opção, a imagem ocupa o lado esquerdo em um layout semelhante ao ST Login. Também permanece disponível o modo legado, que usa a imagem como fundo da página. O plugin reconhece a estrutura `.singlesignon-*` usada pelo login único/Entra ID.
+
+Em telas menores que 900 px, o painel de imagem é ocultado automaticamente e o formulário volta ao centro para preservar a leitura e o acesso aos campos.
 
 O ESO CSS apenas estiliza os controles que o GLPI e os plugins de autenticação já renderizam. O botão do Entra ID, o formulário nativo, os endereços de retorno, os tokens e as regras de sessão não são criados nem modificados por este plugin.
 
@@ -274,7 +277,7 @@ sudo -u www-data php bin/console glpi:plugin:list | grep esocss
 Esperado:
 
 ```text
-esocss | ESO CSS for GLPI | 1.7.3 | Habilitado
+esocss | ESO CSS for GLPI | 1.8.0 | Habilitado
 ```
 
 ### Confirmar CSS

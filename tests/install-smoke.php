@@ -1,6 +1,6 @@
 <?php
 
-define('PLUGIN_ESOCSS_VERSION', '1.7.3');
+define('PLUGIN_ESOCSS_VERSION', '1.8.0');
 
 final class Config
 {
@@ -45,6 +45,6 @@ assertInstallValue(
     Config::$saved['button_hover_background'] ?? null,
     'A atualização deve migrar o antigo hover primário para o botão.'
 );
-assertInstallValue('1.7.3', Config::$saved['version'] ?? null, 'A versão instalada deve ser atualizada.');
+assertInstallValue('1.8.0', Config::$saved['version'] ?? null, 'A versão instalada deve ser atualizada.');
 
 fwrite(STDOUT, "Install smoke test: OK\n");

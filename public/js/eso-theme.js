@@ -312,7 +312,18 @@
         const enabled = !!login.enabled;
         body.classList.toggle('eso-login-custom', enabled);
         body.classList.toggle('eso-login-has-logo', enabled && !!login.logo_url);
+        body.classList.remove(
+            'eso-login-image-panel',
+            'eso-login-image-background',
+            'eso-login-align-center',
+            'eso-login-align-left',
+            'eso-login-align-right'
+        );
         if (!enabled) return;
+
+        const imageMode = ['panel', 'background'].includes(login.image_mode) ? login.image_mode : 'panel';
+        const layout = ['center', 'left', 'right'].includes(login.layout) ? login.layout : 'center';
+        body.classList.add(`eso-login-image-${imageMode}`, `eso-login-align-${layout}`);
 
         const overlayOpacity = Math.max(0, Math.min(90, Number(login.overlay_opacity || 0))) / 100;
         const cardOpacity = Math.max(70, Math.min(100, Number(login.card_opacity || 98))) / 100;
@@ -327,6 +338,7 @@
         setCssVariable('--eso-login-border', login.border_color || '#DDE3EC');
         setCssVariable('--eso-login-card-width', `${Math.max(360, Math.min(1200, Number(login.card_width || 920)))}px`);
         setCssVariable('--eso-login-panel-width', `${Math.max(320, Math.min(1000, Number(login.panel_width || 720)))}px`);
+        setCssVariable('--eso-login-media-width', `${Math.max(45, Math.min(75, Number(login.media_width || 65)))}vw`);
         setCssVariable('--eso-login-card-radius', `${Math.max(0, Math.min(40, Number(login.card_radius || 16)))}px`);
         setCssVariable('--eso-login-logo-image', cssUrl(login.logo_url));
         setCssVariable('--eso-login-logo-height', `${Math.max(24, Math.min(180, Number(login.logo_max_height || 78)))}px`);

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.0 - 2026-08-26
+
+- Adicionado o modo de imagem em painel separado, sem transformar a imagem em fundo da página.
+- Adicionadas posições central, esquerda e direita para a área de login.
+- Adicionado controle da largura do painel de imagem, com adaptação automática para celulares e tablets.
+- Mantido o modo de imagem de fundo para compatibilidade com configurações anteriores.
+
 ## 1.7.3 - 2026-08-26
 
 - Removidos exemplos e dados institucionais específicos do código, dos testes e das telas do plugin.

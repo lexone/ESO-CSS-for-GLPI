@@ -31,6 +31,9 @@ assertSameValue('#FFFFFF', $defaults['menu_background'], 'O menu precisa de uma 
 assertSameValue('#374151', $defaults['menu_text_color'], 'O menu precisa de texto legível por padrão.');
 assertSameValue('#FFFFFF', $defaults['button_text_color'], 'Botões principais precisam de texto legível por padrão.');
 assertSameValue('720', $defaults['login_panel_width'], 'O painel interno do login precisa de uma largura segura.');
+assertSameValue('panel', $defaults['login_image_mode'], 'Novas instalações devem usar a imagem em painel separado.');
+assertSameValue('center', $defaults['login_layout'], 'O login deve começar centralizado.');
+assertSameValue('65', $defaults['login_media_width'], 'O painel de imagem precisa de uma largura equilibrada.');
 assertSameValue('0', $defaults['home_enabled'], 'A página inicial deve preservar o visual nativo por padrão.');
 assertSameValue('0', $defaults['login_enabled'], 'A tela de login deve preservar o visual nativo por padrão.');
 assertSameValue('44', $defaults['brand_sidebar_logo_height'], 'A logo lateral deve ter uma altura segura por padrão.');
@@ -47,6 +50,7 @@ Config::$values[Settings::CONTEXT] = [
 $legacy = Settings::get();
 assertSameValue('#123456', $legacy['button_background'], 'Atualizações devem preservar a cor principal anterior dos botões.');
 assertSameValue('#654321', $legacy['button_hover_background'], 'Atualizações devem preservar o hover anterior dos botões.');
+assertSameValue('background', $legacy['login_image_mode'], 'Atualizações devem preservar a imagem de fundo anterior.');
 
 $sanitized = Settings::sanitize([
     'theme_enabled'         => '1',
@@ -72,6 +76,7 @@ $sanitized = Settings::sanitize([
     'login_card_opacity'     => '20',
     'login_card_width'       => '2000',
     'login_panel_width'      => '20',
+    'login_media_width'      => '90',
     'login_card_radius'      => '-2',
     'login_logo_max_height'  => '300',
     'brand_sidebar_logo_height' => '200',
@@ -83,6 +88,8 @@ $sanitized = Settings::sanitize([
     'login_user_placeholder' => "  usuario\ncorporativo  ",
     'login_footer_text'      => '<a>Central</a> de Serviços',
     'login_background_position' => 'diagonal',
+    'login_image_mode'       => 'iframe',
+    'login_layout'           => 'diagonal',
     'login_card_color'       => '#fefefe',
     'custom_css'            => '.card { opacity: .99; }',
 ]);
@@ -111,6 +118,7 @@ assertSameValue('90', $sanitized['login_overlay_opacity'], 'A sobreposição do 
 assertSameValue('70', $sanitized['login_card_opacity'], 'A opacidade do cartão deve respeitar o limite mínimo.');
 assertSameValue('1200', $sanitized['login_card_width'], 'A largura do login deve respeitar o limite máximo.');
 assertSameValue('320', $sanitized['login_panel_width'], 'O painel interno deve respeitar o limite mínimo.');
+assertSameValue('75', $sanitized['login_media_width'], 'O painel de imagem deve respeitar o limite máximo.');
 assertSameValue('0', $sanitized['login_card_radius'], 'O raio do login deve respeitar o limite mínimo.');
 assertSameValue('180', $sanitized['login_logo_max_height'], 'O logotipo do login deve respeitar o limite máximo.');
 assertSameValue('96', $sanitized['brand_sidebar_logo_height'], 'A logo lateral deve respeitar o limite máximo.');
@@ -122,6 +130,8 @@ assertSameValue('Entrar com conta corporativa', $sanitized['login_sso_button_tex
 assertSameValue('usuario corporativo', $sanitized['login_user_placeholder'], 'O exemplo de usuário deve ser normalizado.');
 assertSameValue('Central de Serviços', $sanitized['login_footer_text'], 'O rodapé não deve aceitar HTML.');
 assertSameValue('center', $sanitized['login_background_position'], 'A posição inválida do login deve usar o centro.');
+assertSameValue('panel', $sanitized['login_image_mode'], 'Modos de imagem inválidos devem usar o painel separado.');
+assertSameValue('center', $sanitized['login_layout'], 'Posições inválidas do login devem usar o centro.');
 assertSameValue('#FEFEFE', $sanitized['login_card_color'], 'As cores do login devem ser normalizadas.');
 
 Config::$values[Settings::CONTEXT] = array_merge($defaults, $sanitized);
@@ -141,6 +151,9 @@ assertSameValue('Entrar com conta corporativa', $loginPayload['texts']['sso_butt
 assertSameValue('Central de Serviços', $loginPayload['texts']['footer'], 'O login deve expor o rodapé sanitizado.');
 assertSameValue(1200, $loginPayload['card_width'], 'A largura pública do login deve ser numérica.');
 assertSameValue(320, $loginPayload['panel_width'], 'A largura pública do painel interno deve ser numérica.');
+assertSameValue(75, $loginPayload['media_width'], 'A largura pública do painel de imagem deve ser numérica.');
+assertSameValue('panel', $loginPayload['image_mode'], 'O modo público da imagem deve ser sanitizado.');
+assertSameValue('center', $loginPayload['layout'], 'A posição pública do login deve ser sanitizada.');
 assertSameValue('', $loginPayload['logo_url'], 'Sem arquivo gerenciado não deve existir URL pública do logotipo.');
 assertSameValue('', $loginPayload['favicon_url'], 'Sem arquivo gerenciado não deve existir favicon público.');
 assertSameValue(false, array_key_exists('custom_css', $loginPayload), 'CSS administrativo não pode ser exposto no login anônimo.');
