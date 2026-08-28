@@ -120,7 +120,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             <h1 class="h2 mb-1"><i class="ti ti-palette me-2"></i>ESO CSS for GLPI</h1>
             <p class="text-muted mb-0">Personalize cores, cards e gráficos ECharts do GLPI 11 sem editar o core.</p>
         </div>
-        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.2') ?></span>
+        <span class="badge bg-blue-lt">v<?= htmlspecialchars(defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.3') ?></span>
     </div>
 
     <form method="post" action="<?= htmlspecialchars($settingsFormUrl, ENT_QUOTES, 'UTF-8') ?>" autocomplete="off" enctype="multipart/form-data">
@@ -477,7 +477,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                                 <select class="form-select" id="login_layout" name="login_layout">
                                     <option value="center" <?= $config['login_layout'] === 'center' ? 'selected' : '' ?>>Centralizado</option>
                                     <option value="left" <?= $config['login_layout'] === 'left' ? 'selected' : '' ?>>À esquerda</option>
-                                    <option value="right" <?= $config['login_layout'] === 'right' ? 'selected' : '' ?>>À direita (estilo ST Login)</option>
+                                    <option value="right" <?= $config['login_layout'] === 'right' ? 'selected' : '' ?>>À direita</option>
                                 </select>
                                 <div class="form-hint">No modo central, o formulário fica no centro e o painel de imagem é ocultado.</div>
                             </div>
@@ -508,9 +508,15 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                                        name="login_overlay_opacity" value="<?= (int) $config['login_overlay_opacity'] ?>">
                             </div>
                             <div class="col-md-4 col-xl-2">
-                                <label class="form-label fw-semibold" for="login_card_opacity">Cartão (%)</label>
-                                <input class="form-control" type="number" min="70" max="100" id="login_card_opacity"
+                                <label class="form-label fw-semibold" for="login_card_opacity">Opacidade do cartão (%)</label>
+                                <input class="form-control" type="number" min="20" max="100" id="login_card_opacity"
                                        name="login_card_opacity" value="<?= (int) $config['login_card_opacity'] ?>">
+                            </div>
+                            <div class="col-md-4 col-xl-2" id="login_glass_transparency_field">
+                                <label class="form-label fw-semibold" for="login_glass_transparency">Transparência do vidro (%)</label>
+                                <input class="form-control" type="number" min="0" max="80" id="login_glass_transparency"
+                                       name="login_glass_transparency" value="<?= (int) $config['login_glass_transparency'] ?>">
+                                <div class="form-hint">0% é sólido; 80% deixa a imagem mais visível.</div>
                             </div>
                             <div class="col-md-4 col-xl-2">
                                 <label class="form-label fw-semibold" for="login_card_width">Largura externa (px)</label>
@@ -778,17 +784,19 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
                             As alterações só são aplicadas globalmente depois de clicar em <strong>Salvar configuração</strong>.
                         </div>
                     </div>
+                    <div class="card-footer" id="eso-save-actions">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary" name="update" value="1">
+                                <i class="ti ti-device-floppy me-1"></i>Salvar configuração
+                            </button>
+                            <button type="submit" class="btn btn-outline-danger" name="reset" value="1"
+                                    onclick="return confirm('Restaurar todas as configurações do tema?');">
+                                <i class="ti ti-restore me-1"></i>Restaurar padrão
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="d-flex gap-2 justify-content-end mt-3 mb-5">
-            <button type="submit" class="btn btn-outline-danger" name="reset" value="1" onclick="return confirm('Restaurar todas as configurações do tema?');">
-                <i class="ti ti-restore me-1"></i>Restaurar padrão
-            </button>
-            <button type="submit" class="btn btn-primary" name="update" value="1">
-                <i class="ti ti-device-floppy me-1"></i>Salvar configuração
-            </button>
         </div>
     </form>
 
@@ -931,13 +939,37 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             'eso-login-preview-align-right',
             'eso-login-preview-style-classic',
             'eso-login-preview-style-glass',
-            'eso-login-preview-style-portal'
+            'eso-login-preview-style-portal',
+            'eso-login-preview-has-background'
         );
         preview.classList.add(
             `eso-login-preview-image-${imageMode}`,
             `eso-login-preview-align-${layout}`,
             `eso-login-preview-style-${loginStyle}`
         );
+        if (!backgroundUrl) {
+            preview.dataset.checkedBackgroundUrl = '';
+            preview.dataset.backgroundAvailable = '0';
+        } else if (preview.dataset.checkedBackgroundUrl === backgroundUrl) {
+            if (preview.dataset.backgroundAvailable === '1') {
+                preview.classList.add('eso-login-preview-has-background');
+            }
+        } else {
+            preview.dataset.checkedBackgroundUrl = backgroundUrl;
+            preview.dataset.backgroundAvailable = '0';
+            const imageProbe = new Image();
+            imageProbe.addEventListener('load', () => {
+                if (preview.dataset.checkedBackgroundUrl !== backgroundUrl) return;
+                preview.dataset.backgroundAvailable = '1';
+                preview.classList.add('eso-login-preview-has-background');
+            }, {once: true});
+            imageProbe.addEventListener('error', () => {
+                if (preview.dataset.checkedBackgroundUrl !== backgroundUrl) return;
+                preview.dataset.backgroundAvailable = '0';
+                preview.classList.remove('eso-login-preview-has-background');
+            }, {once: true});
+            imageProbe.src = backgroundUrl;
+        }
         preview.style.setProperty('--lp-media-width', mediaWidth + '%');
         preview.style.backgroundColor = $('#login_background_color')?.value || '#F3F4F6';
         preview.style.backgroundImage = imageMode === 'background' && backgroundUrl ? `url("${backgroundUrl}")` : 'none';
@@ -957,7 +989,9 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         }
 
         const cardColor = $('#login_card_color')?.value || '#FFFFFF';
-        const cardOpacity = Math.max(70, Math.min(100, Number($('#login_card_opacity')?.value || 98))) / 100;
+        const configuredCardOpacity = Math.max(20, Math.min(100, Number($('#login_card_opacity')?.value || 98)));
+        const glassTransparency = Math.max(0, Math.min(80, Number($('#login_glass_transparency')?.value || 35)));
+        const cardOpacity = (loginStyle === 'glass' ? 100 - glassTransparency : configuredCardOpacity) / 100;
         const textColor = $('#login_text_color')?.value || '#1F2937';
         const mutedColor = $('#login_muted_color')?.value || '#667085';
         const primaryColor = $('#login_primary_color')?.value || '#3157D5';
@@ -984,6 +1018,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             }
         }
         if (card) card.style.borderRadius = Math.max(0, radius * .78) + 'px';
+        $('#login_glass_transparency_field')?.classList.toggle('d-none', loginStyle !== 'glass');
         preview.style.setProperty('--lp-primary', primaryColor);
         preview.style.setProperty('--lp-muted', mutedColor);
         preview.style.setProperty('--lp-border', borderColor);
@@ -1164,7 +1199,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
     all('input[type="number"]').forEach(input => input.addEventListener('input', syncPreview));
     all('#home_title, #home_subtitle, #home_background_position, #remove_home_background, #remove_home_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
-    all('#login_title, #login_subtitle, #login_style, #login_image_mode, #login_layout, #login_background_position, #remove_login_background, #remove_login_logo, #login_hide_default_logo')
+    all('#login_title, #login_subtitle, #login_style, #login_image_mode, #login_layout, #login_background_position, #login_glass_transparency, #remove_login_background, #remove_login_logo, #login_hide_default_logo')
         .forEach(input => input.addEventListener('input', syncPreview));
     all('#remove_brand_sidebar_logo, #remove_brand_sidebar_compact_logo, #remove_brand_header_logo, #remove_brand_favicon')
         .forEach(input => input.addEventListener('input', syncPreview));

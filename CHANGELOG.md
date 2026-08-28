@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.3 - 2026-08-28
+
+- Corrigida a transparência do estilo **Vidro**, inclusive em navegadores baseados em Chromium e Safari.
+- Os controles de salvar e restaurar agora ficam diretamente abaixo da prévia fixa.
+- Removidas as referências textuais a modelos externos de tela de login.
+- Adicionado controle próprio da intensidade de transparência do estilo **Vidro**.
+- Corrigida a prévia para não reservar um painel lateral vazio quando não existe imagem disponível.
+
 ## 1.9.2 - 2026-08-27
 
 - Adicionada a opção **Ocultar a logo padrão “GLPI”** na personalização da tela de login.

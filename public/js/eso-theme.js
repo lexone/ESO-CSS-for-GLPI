@@ -390,7 +390,9 @@
         );
 
         const overlayOpacity = Math.max(0, Math.min(90, Number(login.overlay_opacity || 0))) / 100;
-        const cardOpacity = Math.max(70, Math.min(100, Number(login.card_opacity || 98))) / 100;
+        const configuredCardOpacity = Math.max(20, Math.min(100, Number(login.card_opacity ?? 98)));
+        const glassTransparency = Math.max(0, Math.min(80, Number(login.glass_transparency ?? 35)));
+        const cardOpacity = (style === 'glass' ? 100 - glassTransparency : configuredCardOpacity) / 100;
         setCssVariable('--eso-login-background-image', cssUrl(login.background_url));
         setCssVariable('--eso-login-background-position', login.background_position || 'center');
         setCssVariable('--eso-login-background', login.background_color || '#F3F4F6');

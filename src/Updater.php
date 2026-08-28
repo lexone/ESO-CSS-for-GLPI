@@ -19,7 +19,7 @@ final class Updater
 
     public static function currentVersion(): string
     {
-        return defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.2';
+        return defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.3';
     }
 
     /**

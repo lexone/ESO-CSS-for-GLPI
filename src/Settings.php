@@ -64,6 +64,7 @@ final class Settings
             'home_logo_max_height' => '42',
             'login_overlay_opacity' => '12',
             'login_card_opacity'    => '98',
+            'login_glass_transparency' => '35',
             'login_card_width'      => '920',
             'login_panel_width'     => '720',
             'login_media_width'     => '65',
@@ -206,9 +207,15 @@ final class Settings
         );
         $out['login_card_opacity'] = (string) self::clampInt(
             $input['login_card_opacity'] ?? 98,
-            70,
+            20,
             100,
             98
+        );
+        $out['login_glass_transparency'] = (string) self::clampInt(
+            $input['login_glass_transparency'] ?? 35,
+            0,
+            80,
+            35
         );
         $out['login_card_width'] = (string) self::clampInt(
             $input['login_card_width'] ?? 920,
@@ -413,6 +420,7 @@ final class Settings
             'overlay_color'       => $c['login_overlay_color'],
             'overlay_opacity'     => (int) $c['login_overlay_opacity'],
             'card_opacity'        => (int) $c['login_card_opacity'],
+            'glass_transparency'  => (int) $c['login_glass_transparency'],
             'card_width'          => (int) $c['login_card_width'],
             'panel_width'         => (int) $c['login_panel_width'],
             'media_width'         => (int) $c['login_media_width'],

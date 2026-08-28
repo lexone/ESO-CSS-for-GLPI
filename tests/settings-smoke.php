@@ -33,13 +33,20 @@ $themeStyles = file_get_contents(__DIR__ . '/../public/css/eso-modern.css');
 assertSameValue(true, str_contains($settingsPage, 'name="login_style"'), 'A interface deve exibir o seletor de estilo do login.');
 assertSameValue(true, str_contains($settingsPage, '>Vidro</option>'), 'A interface deve oferecer o modelo Vidro.');
 assertSameValue(true, str_contains($settingsPage, 'Portal lateral'), 'A interface deve oferecer o modelo Portal lateral.');
+assertSameValue(false, stripos($settingsPage, 'ST' . ' Login') !== false, 'A interface não deve citar modelos externos de login.');
+assertSameValue(true, str_contains($settingsPage, 'id="eso-save-actions"'), 'Salvar e restaurar devem ficar junto da prévia.');
 assertSameValue(true, str_contains($settingsPage, 'name="login_hide_default_logo"'), 'A interface deve permitir ocultar a logo padrão do GLPI.');
 assertSameValue(true, str_contains($loginScript, "const layout = style === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout;"), 'O estilo Vidro deve respeitar o alinhamento configurado.');
+assertSameValue(true, str_contains($settingsPage, 'name="login_glass_transparency"'), 'A interface deve permitir configurar a transparência do vidro.');
+assertSameValue(true, str_contains($loginScript, "style === 'glass' ? 100 - glassTransparency"), 'O estilo Vidro deve aplicar a transparência configurada.');
+assertSameValue(true, str_contains($settingsPage, 'eso-login-preview-has-background'), 'A prévia deve distinguir quando existe uma imagem válida.');
+assertSameValue(true, str_contains($settingsPage, 'imageProbe.addEventListener'), 'A prévia deve confirmar que a imagem pode ser carregada antes de reservar o painel.');
 assertSameValue(true, str_contains($themeStyles, '.eso-login-hide-default-logo:not(.eso-login-has-logo)'), 'O CSS deve ocultar apenas a logo padrão quando solicitado.');
 assertSameValue('#FFFFFF', $defaults['menu_background'], 'O menu precisa de uma cor de fundo padrão.');
 assertSameValue('#374151', $defaults['menu_text_color'], 'O menu precisa de texto legível por padrão.');
 assertSameValue('#FFFFFF', $defaults['button_text_color'], 'Botões principais precisam de texto legível por padrão.');
 assertSameValue('720', $defaults['login_panel_width'], 'O painel interno do login precisa de uma largura segura.');
+assertSameValue('35', $defaults['login_glass_transparency'], 'O vidro deve começar com transparência equilibrada.');
 assertSameValue('classic', $defaults['login_style'], 'O estilo atual deve ser preservado por padrão.');
 assertSameValue('0', $defaults['login_hide_default_logo'], 'A logo padrão deve continuar visível em instalações existentes.');
 assertSameValue('panel', $defaults['login_image_mode'], 'Novas instalações devem usar a imagem em painel separado.');
@@ -86,6 +93,7 @@ $sanitized = Settings::sanitize([
     'login_hide_default_logo' => '1',
     'login_overlay_opacity'  => '99',
     'login_card_opacity'     => '20',
+    'login_glass_transparency' => '99',
     'login_card_width'       => '2000',
     'login_panel_width'      => '20',
     'login_media_width'      => '90',
@@ -129,7 +137,8 @@ assertSameValue('center', $sanitized['home_background_position'], 'Posições in
 assertSameValue('1', $sanitized['login_enabled'], 'A personalização do login deveria permanecer ativada.');
 assertSameValue('1', $sanitized['login_hide_default_logo'], 'A preferência de ocultar a logo padrão deve ser preservada.');
 assertSameValue('90', $sanitized['login_overlay_opacity'], 'A sobreposição do login deve respeitar o limite máximo.');
-assertSameValue('70', $sanitized['login_card_opacity'], 'A opacidade do cartão deve respeitar o limite mínimo.');
+assertSameValue('20', $sanitized['login_card_opacity'], 'A opacidade do cartão deve respeitar o limite mínimo.');
+assertSameValue('80', $sanitized['login_glass_transparency'], 'A transparência do vidro deve respeitar o limite máximo.');
 assertSameValue('1200', $sanitized['login_card_width'], 'A largura do login deve respeitar o limite máximo.');
 assertSameValue('320', $sanitized['login_panel_width'], 'O painel interno deve respeitar o limite mínimo.');
 assertSameValue('75', $sanitized['login_media_width'], 'O painel de imagem deve respeitar o limite máximo.');
@@ -166,6 +175,7 @@ assertSameValue('erro Logon Único', $loginPayload['title'], 'O login deve expor
 assertSameValue('Entrar com conta corporativa', $loginPayload['texts']['sso_button'], 'O login deve expor o texto SSO sanitizado.');
 assertSameValue('Central de Serviços', $loginPayload['texts']['footer'], 'O login deve expor o rodapé sanitizado.');
 assertSameValue(1200, $loginPayload['card_width'], 'A largura pública do login deve ser numérica.');
+assertSameValue(80, $loginPayload['glass_transparency'], 'A transparência pública do vidro deve ser numérica.');
 assertSameValue(320, $loginPayload['panel_width'], 'A largura pública do painel interno deve ser numérica.');
 assertSameValue(75, $loginPayload['media_width'], 'A largura pública do painel de imagem deve ser numérica.');
 assertSameValue('panel', $loginPayload['image_mode'], 'O modo público da imagem deve ser sanitizado.');

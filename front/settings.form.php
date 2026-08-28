@@ -16,7 +16,7 @@ try {
     if (isset($_POST['reset'])) {
         MediaManager::clearAll();
         $values = Settings::defaults();
-        $values['version'] = defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.2';
+        $values['version'] = defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.3';
         Config::setConfigurationValues(Settings::CONTEXT, $values);
         Session::addMessageAfterRedirect('Tema ESO CSS restaurado para os valores padrão.', true, INFO);
     } elseif (isset($_POST['update'])) {
@@ -25,7 +25,7 @@ try {
             $values,
             MediaManager::processSettings(Settings::get(), $_POST, $_FILES)
         );
-        $values['version'] = defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.2';
+        $values['version'] = defined('PLUGIN_ESOCSS_VERSION') ? PLUGIN_ESOCSS_VERSION : '1.9.3';
         Config::setConfigurationValues(Settings::CONTEXT, $values);
         Session::addMessageAfterRedirect('Configuração visual salva com sucesso.', true, INFO);
     } else {

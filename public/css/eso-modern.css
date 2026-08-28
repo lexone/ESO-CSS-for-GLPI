@@ -427,7 +427,8 @@ body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card
     border: 1px solid color-mix(in srgb, var(--eso-login-border) 72%, transparent) !important;
     border-radius: var(--eso-login-card-radius) !important;
     box-shadow: 0 24px 70px rgba(3, 14, 35, .28) !important;
-    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(135%);
+    backdrop-filter: blur(24px) saturate(135%);
 }
 
 body.welcome-anonymous.eso-login-custom.eso-login-style-glass .main-content-card .card-body {
@@ -1367,16 +1368,16 @@ body.eso-theme-enabled .alert {
     justify-content: center;
 }
 
-#esocss-config-page .eso-login-preview-image-panel .eso-login-preview-overlay {
+#esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background .eso-login-preview-overlay {
     padding: 0;
 }
 
-#esocss-config-page .eso-login-preview-image-panel:not(.eso-login-preview-align-center) .eso-login-preview-media {
+#esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background:not(.eso-login-preview-align-center) .eso-login-preview-media {
     display: block;
     flex: 0 0 var(--lp-media-width, 65%);
 }
 
-#esocss-config-page .eso-login-preview-image-panel .eso-login-preview-content {
+#esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background .eso-login-preview-content {
     padding: 22px;
 }
 
@@ -1388,15 +1389,15 @@ body.eso-theme-enabled .alert {
     order: 1;
 }
 
-#esocss-config-page .eso-login-preview-image-panel:not(.eso-login-preview-align-center) .eso-login-preview-shell {
+#esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background:not(.eso-login-preview-align-center) .eso-login-preview-shell {
     padding: 16px;
 }
 
-#esocss-config-page .eso-login-preview-image-panel:not(.eso-login-preview-align-center) .eso-login-preview-card {
+#esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background:not(.eso-login-preview-align-center) .eso-login-preview-card {
     padding: 16px;
 }
 
-#esocss-config-page .eso-login-preview-image-panel:not(.eso-login-preview-align-center) .eso-login-preview-panels {
+#esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background:not(.eso-login-preview-align-center) .eso-login-preview-panels {
     grid-template-columns: 1fr;
 }
 
@@ -1606,7 +1607,8 @@ body.eso-theme-enabled .alert {
     padding: 28px;
     background: color-mix(in srgb, var(--eso-login-card-preview, #FFFFFF) 76%, transparent) !important;
     box-shadow: 0 20px 50px rgba(3, 14, 35, .28);
-    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px) saturate(135%);
+    backdrop-filter: blur(18px) saturate(135%);
 }
 
 #esocss-config-page .eso-login-preview-style-glass .eso-login-preview-title,
@@ -1707,7 +1709,7 @@ body.eso-theme-enabled .alert {
 }
 
 @media (max-width: 767.98px) {
-    #esocss-config-page .eso-login-preview-image-panel:not(.eso-login-preview-align-center) .eso-login-preview-media {
+    #esocss-config-page .eso-login-preview-image-panel.eso-login-preview-has-background:not(.eso-login-preview-align-center) .eso-login-preview-media {
         display: none;
     }
 
