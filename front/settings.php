@@ -920,12 +920,12 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             ? ''
             : (preview.dataset.selectedBackgroundUrl || preview.dataset.backgroundUrl || '');
         const styleValue = $('#login_style')?.value || 'classic';
-        const loginStyle = ['classic', 'glass', 'portal'].includes(styleValue) ? styleValue : 'classic';
+        const previewLoginStyle = ['classic', 'glass', 'portal'].includes(styleValue) ? styleValue : 'classic';
         const configuredImageMode = $('#login_image_mode')?.value === 'background' ? 'background' : 'panel';
         const layoutValue = $('#login_layout')?.value || 'center';
         const configuredLayout = ['center', 'left', 'right'].includes(layoutValue) ? layoutValue : 'center';
-        const imageMode = loginStyle === 'classic' ? configuredImageMode : 'background';
-        const layout = loginStyle === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout;
+        const imageMode = previewLoginStyle === 'classic' ? configuredImageMode : 'background';
+        const layout = previewLoginStyle === 'portal' && configuredLayout === 'center' ? 'right' : configuredLayout;
         const mediaWidth = Math.max(45, Math.min(75, Number($('#login_media_width')?.value || 65)));
         const imagePosition = $('#login_background_position')?.value || 'center';
         const overlayOpacity = Math.max(0, Math.min(90, Number($('#login_overlay_opacity')?.value || 12))) / 100;
@@ -945,7 +945,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         preview.classList.add(
             `eso-login-preview-image-${imageMode}`,
             `eso-login-preview-align-${layout}`,
-            `eso-login-preview-style-${loginStyle}`
+            `eso-login-preview-style-${previewLoginStyle}`
         );
         if (!backgroundUrl) {
             preview.dataset.checkedBackgroundUrl = '';
@@ -991,7 +991,7 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
         const cardColor = $('#login_card_color')?.value || '#FFFFFF';
         const configuredCardOpacity = Math.max(20, Math.min(100, Number($('#login_card_opacity')?.value || 98)));
         const glassTransparency = Math.max(0, Math.min(80, Number($('#login_glass_transparency')?.value || 35)));
-        const cardOpacity = (loginStyle === 'glass' ? 100 - glassTransparency : configuredCardOpacity) / 100;
+        const cardOpacity = (previewLoginStyle === 'glass' ? 100 - glassTransparency : configuredCardOpacity) / 100;
         const textColor = $('#login_text_color')?.value || '#1F2937';
         const mutedColor = $('#login_muted_color')?.value || '#667085';
         const primaryColor = $('#login_primary_color')?.value || '#3157D5';
@@ -1018,14 +1018,14 @@ function esocss_image_field(string $slot, string $label, string $url, string $he
             }
         }
         if (card) card.style.borderRadius = Math.max(0, radius * .78) + 'px';
-        $('#login_glass_transparency_field')?.classList.toggle('d-none', loginStyle !== 'glass');
+        $('#login_glass_transparency_field')?.classList.toggle('d-none', previewLoginStyle !== 'glass');
         preview.style.setProperty('--lp-primary', primaryColor);
         preview.style.setProperty('--lp-muted', mutedColor);
         preview.style.setProperty('--lp-border', borderColor);
 
         const title = preview.querySelector('.eso-login-preview-title');
         if (title) {
-            title.textContent = loginStyle === 'portal'
+            title.textContent = previewLoginStyle === 'portal'
                 ? ($('#login_welcome_text')?.value.trim() || 'Acesse sua conta')
                 : ($('#login_title')?.value.trim() || 'Logon Único');
         }
