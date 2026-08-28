@@ -39,7 +39,7 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 
 ### Painel de configuração
 
-![Painel de configuração do ESO CSS for GLPI](docs/screenshots/configuration-panel.png)
+![Painel de configuração do ESO CSS for GLPI](https://raw.githubusercontent.com/lexone/ESO-CSS-for-GLPI/main/docs/screenshots/configuration-panel.jpg)
 
 ### Login — estilo Vidro
 
