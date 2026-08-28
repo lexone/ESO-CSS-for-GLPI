@@ -35,6 +35,16 @@ Plugin de personalização visual para **GLPI 11**, criado para modernizar a int
 - Sem alteração do core do GLPI.
 - Configurações persistidas no contexto `plugin:esocss` da tabela de configurações do GLPI.
 
+## Capturas de tela
+
+### Login — estilo Vidro
+
+![Tela de login no estilo Vidro](docs/screenshots/login-glass.png)
+
+### Login — estilo Portal lateral
+
+![Tela de login no estilo Portal lateral](docs/screenshots/login-portal.png)
+
 ## Estrutura
 
 ```text
